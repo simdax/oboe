@@ -24,7 +24,7 @@ set (OBOE_DIR ${SAMPLE_ROOT_DIR}/..)
 add_subdirectory(${OBOE_DIR} ./oboe-bin)
 
 set(HOME "\\\\wsl.localhost/Debian/home/simdax/soundx-ai")
-set(ANDROID_BUILD "${HOME}/android_${ANDROID_ABI}")
+set(ANDROID_BUILD "${HOME}/android/build_${ANDROID_ABI}")
 add_library(soundx STATIC IMPORTED)
 set_target_properties(soundx PROPERTIES IMPORTED_LOCATION "${ANDROID_BUILD}/libsoundx_backend.a")
 set(TFLITE_DIR "${ANDROID_BUILD}/tflite")
