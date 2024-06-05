@@ -25,6 +25,12 @@ static LiveEffectEngine *engine = nullptr;
 
 extern "C" {
 
+JNIEXPORT jstring JNICALL
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Coucou(JNIEnv *env,
+                                                                jclass) {
+    return env->NewStringUTF("Coucou");
+}
+
 JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_create(JNIEnv *env,
                                                                jclass) {

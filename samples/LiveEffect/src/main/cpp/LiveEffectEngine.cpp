@@ -93,6 +93,7 @@ oboe::Result  LiveEffectEngine::openStreams() {
     }
     warnIfNotLowLatency(mPlayStream);
 
+    LOGE("opening input stream. sampleRate %d", mSampleRate);
     setupRecordingStreamParameters(&inBuilder, mSampleRate);
     result = inBuilder.openStream(mRecordingStream);
     if (result != oboe::Result::OK) {
