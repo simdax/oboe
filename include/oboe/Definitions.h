@@ -120,7 +120,7 @@ namespace oboe {
         /**
          * Signed 24-bit integers, packed into 3 bytes.
          *
-         * Note that the use of this format does not guarantee that
+         * Note that the use of this format does not t
          * the full precision will be provided.  The underlying device may
          * be using I16 format.
          *

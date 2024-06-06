@@ -147,6 +147,7 @@ public class MainActivity extends Activity
     protected void onStart() {
         super.onStart();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        LiveEffectEngine.start();
     }
 
     @Override
