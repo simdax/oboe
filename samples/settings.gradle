@@ -16,11 +16,4 @@
  */
 
 include ':audio-device'
-include ':hello-oboe'
-include ':RhythmGame'
 include ':LiveEffect'
-include ':SoundBoard'
-include ':drumthumper'
-include ':parselib'
-include ':iolib'
-include ':minimaloboe'
