@@ -32,13 +32,6 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Coucou(JNIEnv *env,
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_start(JNIEnv *env,
-                                                                jclass) {
-    engine = new LiveEffectEngine();
-    return (engine != nullptr) ? JNI_TRUE : JNI_FALSE;
-}
-
-JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_create(JNIEnv *env,
                                                                 jclass) {
     if (engine == nullptr) {

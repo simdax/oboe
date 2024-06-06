@@ -25,7 +25,7 @@ public:
     {
         callback = std::make_unique<CallbackDataStruct>();
         callback->input1LChannels = { 0 };
-        callback->input1RChannels = { 1 };
+        callback->input1RChannels = { 0 };
         callback->output1LChannels = { 0 };
         callback->output1RChannels = { 1 };
         callback->output2LChannels = { 2 };

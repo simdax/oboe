@@ -4,7 +4,7 @@
 #include "LiveEffectEngine.h"
 
 LiveEffectEngine::LiveEffectEngine() {
-    //assert(mOutputChannelCount == mInputChannelCount);
+    assert(mOutputChannelCount == mInputChannelCount);
 }
 
 void LiveEffectEngine::setRecordingDeviceId(int32_t deviceId) {
