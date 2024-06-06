@@ -80,10 +80,10 @@ public:
 
         // It is possible that there may be fewer input than output samples.
         int32_t samplesToProcess = std::min(numInputSamples, numOutputSamples);
-         for (int32_t i = 0; i < samplesToProcess; i++) {
-             *outputFloats++ = *inputFloats++ * 0.915; // do some arbitrary processing
-         }
-        //callback->tick(inputFloats, outputFloats, samplesToProcess); // * 0.515; // do some arbitrary processing
+        // for (int32_t i = 0; i < samplesToProcess; i++) {
+        //     *outputFloats++ = *inputFloats++ * 0.915; // do some arbitrary processing
+        // }
+        callback->tick(inputFloats, outputFloats, samplesToProcess); // * 0.515; // do some arbitrary processing
 
         // If there are fewer input samples then clear the rest of the buffer.
         int32_t samplesLeft = numOutputSamples - numInputSamples;

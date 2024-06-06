@@ -16,4 +16,4 @@
  */
 
 include ':audio-device'
-include ':LiveEffect'
+include ':SoundX'
