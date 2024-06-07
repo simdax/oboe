@@ -49,6 +49,7 @@ public class MainActivity extends Activity
 
     private TextView statusText;
     private Button toggleEffectButton;
+    private Button changeEffectButton;
     private AudioDeviceSpinner recordingDeviceSpinner;
     private AudioDeviceSpinner playbackDeviceSpinner;
     private boolean isPlaying = false;
@@ -70,6 +71,14 @@ public class MainActivity extends Activity
             }
         });
         toggleEffectButton.setText(getString(R.string.start_effect));
+        changeEffectButton = findViewById(R.id.button_change_effect);
+        changeEffectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeEffect();
+            }
+        });
+        changeEffectButton.setText(getString(R.string.change_effect));
 
         recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -172,6 +181,11 @@ public class MainActivity extends Activity
             startEffect();
         }
     }
+
+    public void changeEffect() {
+            LiveEffectEngine.changeProcess();
+    }
+
 
     private void startEffect() {
         Log.d(TAG, "Attempting to start");

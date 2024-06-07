@@ -65,7 +65,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/recording_device"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apiSelectionGroup"/>
+        app:layout_constraintTop_toBottomOf="@+id/apiSelectionGroup" />
 
     <com.google.oboe.samples.audio_device.AudioDeviceSpinner
         android:id="@+id/recording_devices_spinner"
@@ -116,13 +116,24 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_group_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:lines="6"
         android:text="@string/status_warning"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
+
+    <Button
+        android:id="@+id/button_change_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="398dp"
+        android:layout_marginBottom="285dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="161dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

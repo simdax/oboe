@@ -41,7 +41,13 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_create(JNIEnv *env,
     return (engine != nullptr) ? JNI_TRUE : JNI_FALSE;
 }
 
-
+JNIEXPORT void JNICALL
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_changeProcess(JNIEnv *env,
+                                                                jclass) {
+    if (engine) {
+        engine->mFullDuplexPass.soundx = ! engine->mFullDuplexPass.soundx;
+    }
+}
 
 JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env,
