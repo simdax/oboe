@@ -30,6 +30,7 @@ public enum LiveEffectEngine {
 
     // Native methods
     static native boolean create();
+    static native String GetAllPresets();
     static native boolean changeProcess();
     static native boolean isAAudioRecommended();
     static native boolean setAPI(int apiType);

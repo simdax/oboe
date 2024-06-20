@@ -35,8 +35,15 @@ public:
     bool setAudioApi(oboe::AudioApi);
     bool isAAudioRecommended(void);
 
-//private:
+    char* getAllPresets() {
+        return mFullDuplexPass.callback->get_allPreset();
+    }
+    char* getAllMeans() { return mFullDuplexPass.callback->get_allPresetMeans(); }
+    char **getAllClasses() { return mFullDuplexPass.callback->settings.getAllClasses(); }
+
     FullDuplexPass    mFullDuplexPass;
+
+private:
     bool              mIsEffectOn = false;
     int32_t           mRecordingDeviceId = oboe::kUnspecified;
     int32_t           mPlaybackDeviceId = oboe::kUnspecified;

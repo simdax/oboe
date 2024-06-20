@@ -36,6 +36,8 @@ import android.widget.Toast;
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 
+import org.w3c.dom.Text;
+
 /**
  * TODO: Update README.md and go through and comment sample
  */
@@ -47,9 +49,12 @@ public class MainActivity extends Activity
     private static final int OBOE_API_AAUDIO = 0;
     private static final int OBOE_API_OPENSL_ES=1;
 
+    private TextView Presets;
+
     private TextView statusText;
     private Button toggleEffectButton;
     private Button changeEffectButton;
+    private Button presetsButton;
     private AudioDeviceSpinner recordingDeviceSpinner;
     private AudioDeviceSpinner playbackDeviceSpinner;
     private boolean isPlaying = false;
@@ -62,7 +67,16 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Presets = findViewById(R.id.presets);
+        Presets.setText("Presets:");
         statusText = findViewById(R.id.status_view_text);
+        presetsButton = findViewById(R.id.button_presets);
+        presetsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Presets.setText(LiveEffectEngine.GetAllPresets());
+                    }
+                });
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
         toggleEffectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +197,7 @@ public class MainActivity extends Activity
     }
 
     public void changeEffect() {
-            LiveEffectEngine.changeProcess();
+        LiveEffectEngine.changeProcess();
     }
 
 

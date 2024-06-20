@@ -136,4 +136,25 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="161dp" />
 
+    <TextView
+        android:id="@+id/presets"
+        android:layout_width="285dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="88dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_view_text" />
+
+    <Button
+        android:id="@+id/button_presets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="469dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,33 +33,34 @@ public:
         callback->maxIn = 2;
         callback->maxOut = 2;
         callback->settings.ai = false;
-        callback->CompressorOn = false;//true;
+        callback->CompressorOn = true;
         callback->settings.fadeOn = false;//true;
         callback->settings.peakFilter = false;//true;
         callback->settings.samplerate = 48000;
+
         callback->settings.solo = { 0, 0, 0, 0, 0 };
         callback->settings.mute = { 0, 0, 0, 0, 0 };
-        callback->settings.freq_bands = 2;
-        callback->settings.fc_low_1 = { 120  };
-        callback->settings.fc_high_1 = {  18000 };
-        callback->settings.pitch = { 0  };
-        callback->settings.fc_low_2 = { 2 };
-        callback->settings.fc_high_2 = { 20000};
-        callback->settings.gain_L = { 0 };
-        callback->settings.gain_R = { 0 };
+
+        //callback->settings.freq_bands = 2;
+        //callback->settings.fc_low_1 = { 120  };
+        //callback->settings.fc_high_1 = {  18000 };
+        //callback->settings.pitch = { 0  };
+        //callback->settings.fc_low_2 = { 2 };
+        //callback->settings.fc_high_2 = { 20000};
+        //callback->settings.gain_L = { 0 };
+        //callback->settings.gain_R = { 0 };
+
+        callback->settings.freq_bands = 5;
+        callback->settings.fc_low_1 = { 120, 450, 900, 1900 };
+        callback->settings.fc_high_1 = { 450, 900, 1900, 18000 };
+        callback->settings.pitch = { 0, 0, 0, 0 };
+        callback->settings.fc_low_2 = { 2, 100, 100, 70 };
+        callback->settings.fc_high_2 = { 20000, 20000, 20000, 20000 };
+        callback->settings.gain_L = { -6, -32, -38, -50 };
+        callback->settings.gain_R = { -50, -2, -22, -22 };
+
         callback->settings.master_gain_L = 9;
         callback->settings.master_gain_R = 9;
-        //
-        // callback->settings.freq_bands = 5;
-        //        //callback->settings.fc_low_1 = { 120, 450, 900, 1900 };
-        //        //callback->settings.fc_high_1 = { 450, 900, 1900, 18000 };
-        //        //callback->settings.pitch = { 0, 0, 0, 0, 0 };
-        //        //callback->settings.fc_low_2 = { 2, 100, 100, 70, 2 };
-        //        //callback->settings.fc_high_2 = { 20000, 20000, 20000, 20000, 400 };
-        //        //callback->settings.gain_L = { -6, -32, -38, -50, 0, 0 };
-        //        //callback->settings.gain_R = { -50, -2, -22, -22, -10, -1 };
-        //        //callback->settings.master_gain_L = 9;
-        //        //callback->settings.master_gain_R = 9;
 
         callback->Compressor->_prepare(48000, 1024);
         callback->Compressor->setAttackTime(0.000012);
