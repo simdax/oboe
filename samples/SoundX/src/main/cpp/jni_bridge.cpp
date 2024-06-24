@@ -25,14 +25,27 @@ LiveEffectEngine *engine = nullptr;
 
 extern "C" {
 
-JNIEXPORT jstring JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_GetAllPresets(JNIEnv *env,
-                                                                jclass) {
-    if(engine)
-    {
-        return env->NewStringUTF(engine->getAllPresets());
-    }
-    return env->NewStringUTF("No Engine available");
+JNIEXPORT void JNICALL
+Java_com_google_oboe_samples_liveEffect_MainActivity_Print(JNIEnv *env,
+                                                                jobject obj,
+                                                                jobject TextView
+                                                                ) {
+     //jfieldID Id = env->GetFieldID(
+    //       env->GetObjectClass(obj),
+     //       "Presets", "LTextView");
+    //jobject textView = env->GetObjectField(
+     //       obj, Id);
+
+    env->CallVoidMethod(TextView,
+                   env->GetMethodID(
+                           env->GetObjectClass(TextView),
+                           "setText",
+                           "(Ljava/lang/CharSequence;)V"),
+                    env->NewStringUTF("New text set from C++")
+                );
+
+    // Return the new text
+    //return
 }
 
 JNIEXPORT jboolean JNICALL

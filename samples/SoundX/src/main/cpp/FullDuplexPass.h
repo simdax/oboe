@@ -32,7 +32,7 @@ public:
         callback->output2RChannels = { 3 };
         callback->maxIn = 2;
         callback->maxOut = 2;
-        callback->settings.ai = false;
+        callback->settings.ai = true;
         callback->CompressorOn = true;
         callback->settings.fadeOn = false;//true;
         callback->settings.peakFilter = false;//true;
@@ -90,7 +90,7 @@ public:
         int32_t numInputSamples = numInputFrames * samplesPerFrame;
         int32_t numOutputSamples = numOutputFrames * samplesPerFrame;
 
-        if (!soundx)
+        if (false)//!soundx)
         {
         // It is possible that there may be fewer input than output samples.
             int32_t samplesToProcess = std::min(numInputSamples, numOutputSamples);
@@ -101,6 +101,8 @@ public:
         else {
             callback->tick(inputFloats, outputFloats, numInputFrames); // * 0.515; // do some arbitrary processing
         }
+        //LOGI("allPresets: %s", callback->allPreset.c_str()) ;
+        //LOGI("allPresetsMeans: %s", callback->allPresetMeans.c_str()) ;
 
         // If there are fewer input samples then clear the rest of the buffer.
         int32_t samplesLeft = numOutputSamples - numInputSamples;

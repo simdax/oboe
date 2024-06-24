@@ -49,7 +49,11 @@ public class MainActivity extends Activity
     private static final int OBOE_API_AAUDIO = 0;
     private static final int OBOE_API_OPENSL_ES=1;
 
-    private TextView Presets;
+    static {
+        System.loadLibrary("liveEffect");
+    }
+    public TextView Presets;
+    native void Print(TextView v);
 
     private TextView statusText;
     private Button toggleEffectButton;
@@ -68,15 +72,8 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         Presets = findViewById(R.id.presets);
-        Presets.setText("Presets:");
+        //LiveEffectEngine.GetAllPresets(R.id.presets);
         statusText = findViewById(R.id.status_view_text);
-        presetsButton = findViewById(R.id.button_presets);
-        presetsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Presets.setText(LiveEffectEngine.GetAllPresets());
-                    }
-                });
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
         toggleEffectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +86,7 @@ public class MainActivity extends Activity
         changeEffectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeEffect();
+                Print(findViewById(R.id.presets));
             }
         });
         changeEffectButton.setText(getString(R.string.change_effect));
