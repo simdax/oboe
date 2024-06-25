@@ -39,23 +39,26 @@ void Update(
     std::stringstream ss;
 
     ss << "Preset: " << allPreset_data << std::endl
-       << "Preset Mean: " << allPresetMeans_data << std::endl
-       << "gains : " << presetSettings_gain_L_0 << " " << presetSettings_gain_R_0
-       << " " << presetSettings_gain_L_1 << " " << presetSettings_gain_R_1
-       << " " << presetSettings_gain_L_2 << " " << presetSettings_gain_R_2
-       << " " << presetSettings_gain_L_3 << " " << presetSettings_gain_R_3
-       << " " << presetSettings_gain_L_4 << " " << presetSettings_gain_R_4
-       << " " << presetSettings_gain_L_5 << " " << presetSettings_gain_R_5;
-    LOGI("%s", ss.str().c_str());
-
+       << "Preset Mean: " << allPresetMeans_data << std::endl;
     JNIEnv* e;
     vm->GetEnv((void**)&e, JNI_VERSION_1_6);
+    double cpp_gains[12] = {
+            presetSettings_gain_L_0, presetSettings_gain_R_0,
+            presetSettings_gain_L_1, presetSettings_gain_R_1,
+            presetSettings_gain_L_2, presetSettings_gain_R_2,
+            presetSettings_gain_L_3, presetSettings_gain_R_3,
+            presetSettings_gain_L_4, presetSettings_gain_R_4,
+            presetSettings_gain_L_5, presetSettings_gain_R_5,
+    };
+    jdoubleArray gains = e->NewDoubleArray(12);
+    e->SetDoubleArrayRegion(gains, 0, 12, &cpp_gains[0]);
     e->CallVoidMethod(Text,
                         e->GetMethodID(
                                 e->GetObjectClass(Text),
-                                "coucou",
-                                "(Ljava/lang/CharSequence;)V"),
-                        e->NewStringUTF(ss.str().c_str()));
+                                "Set",
+                                "(Ljava/lang/CharSequence;[D)V"),
+                        e->NewStringUTF(ss.str().c_str()), gains
+                        );
 }
 
 JNIEXPORT void JNICALL

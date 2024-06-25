@@ -101,8 +101,6 @@ public:
         else {
             callback->tick(inputFloats, outputFloats, numInputFrames); // * 0.515; // do some arbitrary processing
         }
-        //LOGI("allPresets: %s", callback->allPreset.c_str()) ;
-        //LOGI("allPresetsMeans: %s", callback->allPresetMeans.c_str()) ;
 
         // If there are fewer input samples then clear the rest of the buffer.
         int32_t samplesLeft = numOutputSamples - numInputSamples;

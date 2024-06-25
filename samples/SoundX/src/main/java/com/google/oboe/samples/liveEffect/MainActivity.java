@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +32,18 @@ public class MainActivity extends Activity
     static {
         System.loadLibrary("liveEffect");
     }
-    public TextView Presets;
-    void coucou(CharSequence str)
+    private TextView Presets;
+    private SeekBar Voice;
+    private SeekBar Instruments;
+    private SeekBar Bass;
+    private SeekBar Sub;
+    void Set(CharSequence str, double[] gains)
     {
-       Presets.setText(str);
+        Presets.setText(str);
+        Voice.setProgress((int)gains[0]);
+        Instruments.setProgress((int)gains[2]);
+        Bass.setProgress((int)gains[4]);
+        Sub.setProgress((int)gains[6]);
     }
     native void create(TextView view);
 
@@ -55,6 +64,21 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         Presets = findViewById(R.id.presets);
+        Voice= findViewById(R.id.voiceSlider);
+        Instruments = findViewById(R.id.InstrumentsSlider);
+        Bass = findViewById(R.id.BasseSlider);
+        Sub = findViewById(R.id.SubBasseSlider);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Voice.setMin(-96);
+            Instruments.setMin(-96);
+            Bass.setMin(-96);
+            Sub.setMin(-96);
+        }
+        Voice.setMax(0);
+        Instruments.setMax(0);
+        Bass.setMax(0);
+        Sub.setMax(0);
+
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
         toggleEffectButton.setOnClickListener(new View.OnClickListener() {
@@ -64,14 +88,6 @@ public class MainActivity extends Activity
             }
         });
         toggleEffectButton.setText(getString(R.string.start_effect));
-        changeEffectButton = findViewById(R.id.button_change_effect);
-        changeEffectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        changeEffectButton.setText(getString(R.string.change_effect));
-
         recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             recordingDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_INPUTS);
