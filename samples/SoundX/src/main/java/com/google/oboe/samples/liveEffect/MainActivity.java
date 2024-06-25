@@ -1,19 +1,3 @@
-/*
- * Copyright 2018 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.google.oboe.samples.liveEffect;
 
 import android.Manifest;
@@ -36,11 +20,6 @@ import android.widget.Toast;
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 
-import org.w3c.dom.Text;
-
-/**
- * TODO: Update README.md and go through and comment sample
- */
 public class MainActivity extends Activity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -53,7 +32,11 @@ public class MainActivity extends Activity
         System.loadLibrary("liveEffect");
     }
     public TextView Presets;
-    native void Print(TextView v);
+    void coucou(CharSequence str)
+    {
+       Presets.setText(str);
+    }
+    native void create(TextView view);
 
     private TextView statusText;
     private Button toggleEffectButton;
@@ -72,7 +55,6 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         Presets = findViewById(R.id.presets);
-        //LiveEffectEngine.GetAllPresets(R.id.presets);
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
         toggleEffectButton.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +68,6 @@ public class MainActivity extends Activity
         changeEffectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Print(findViewById(R.id.presets));
             }
         });
         changeEffectButton.setText(getString(R.string.change_effect));
@@ -172,7 +153,7 @@ public class MainActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        LiveEffectEngine.create();
+        create(findViewById(R.id.presets));
         mAAudioRecommended = LiveEffectEngine.isAAudioRecommended();
         EnableAudioApiUI(true);
         LiveEffectEngine.setAPI(apiSelection);

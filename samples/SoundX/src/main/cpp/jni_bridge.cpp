@@ -22,45 +22,58 @@ static const int kOboeApiAAudio = 0;
 static const int kOboeApiOpenSLES = 1;
 
 LiveEffectEngine *engine = nullptr;
+JavaVM* vm;
+jobject Text;
 
-extern "C" {
+extern "C"
+{
 
-JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_MainActivity_Print(JNIEnv *env,
-                                                                jobject obj,
-                                                                jobject TextView
-                                                                ) {
-     //jfieldID Id = env->GetFieldID(
-    //       env->GetObjectClass(obj),
-     //       "Presets", "LTextView");
-    //jobject textView = env->GetObjectField(
-     //       obj, Id);
+void Update(
+        double presetSettings_gain_L_0, double presetSettings_gain_R_0,
+        double presetSettings_gain_L_1, double presetSettings_gain_R_1,
+        double presetSettings_gain_L_2, double presetSettings_gain_R_2,
+        double presetSettings_gain_L_3, double presetSettings_gain_R_3,
+        double presetSettings_gain_L_4, double presetSettings_gain_R_4,
+        double presetSettings_gain_L_5, double presetSettings_gain_R_5,
+        char* allPreset_data, char* allPresetMeans_data) {
+    std::stringstream ss;
 
-    env->CallVoidMethod(TextView,
-                   env->GetMethodID(
-                           env->GetObjectClass(TextView),
-                           "setText",
-                           "(Ljava/lang/CharSequence;)V"),
-                    env->NewStringUTF("New text set from C++")
-                );
+    ss << "Preset: " << allPreset_data << std::endl
+       << "Preset Mean: " << allPresetMeans_data << std::endl
+       << "gains : " << presetSettings_gain_L_0 << " " << presetSettings_gain_R_0
+       << " " << presetSettings_gain_L_1 << " " << presetSettings_gain_R_1
+       << " " << presetSettings_gain_L_2 << " " << presetSettings_gain_R_2
+       << " " << presetSettings_gain_L_3 << " " << presetSettings_gain_R_3
+       << " " << presetSettings_gain_L_4 << " " << presetSettings_gain_R_4
+       << " " << presetSettings_gain_L_5 << " " << presetSettings_gain_R_5;
+    LOGI("%s", ss.str().c_str());
 
-    // Return the new text
-    //return
+    JNIEnv* e;
+    vm->GetEnv((void**)&e, JNI_VERSION_1_6);
+    e->CallVoidMethod(Text,
+                        e->GetMethodID(
+                                e->GetObjectClass(Text),
+                                "coucou",
+                                "(Ljava/lang/CharSequence;)V"),
+                        e->NewStringUTF(ss.str().c_str()));
 }
 
-JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_create(JNIEnv *env,
-                                                                jclass) {
+JNIEXPORT void JNICALL
+Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env,
+                                                            jobject obj,
+                                                            jobject View
+) {
     if (engine == nullptr) {
         engine = new LiveEffectEngine();
     }
-
-    return (engine != nullptr) ? JNI_TRUE : JNI_FALSE;
+    env->GetJavaVM(&vm);
+    Text = env->NewGlobalRef(obj);
+    engine->mFullDuplexPass.callback->on_settings_update = Update;
 }
 
 JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_changeProcess(JNIEnv *env,
-                                                                jclass) {
+                                                                       jclass) {
     if (engine) {
         engine->mFullDuplexPass.soundx = ! engine->mFullDuplexPass.soundx;
     }
@@ -68,7 +81,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_changeProcess(JNIEnv *e
 
 JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env,
-                                                               jclass) {
+                                                                jclass) {
     if (engine) {
         engine->setEffectOn(false);
         delete engine;
@@ -78,11 +91,11 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env,
 
 JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setEffectOn(
-    JNIEnv *env, jclass, jboolean isEffectOn) {
+        JNIEnv *env, jclass, jboolean isEffectOn) {
     if (engine == nullptr) {
         LOGE(
-            "Engine is null, you must call createEngine before calling this "
-            "method");
+                "Engine is null, you must call createEngine before calling this "
+                "method");
         return JNI_FALSE;
     }
 
@@ -91,11 +104,11 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setEffectOn(
 
 JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(
-    JNIEnv *env, jclass, jint deviceId) {
+        JNIEnv *env, jclass, jint deviceId) {
     if (engine == nullptr) {
         LOGE(
-            "Engine is null, you must call createEngine before calling this "
-            "method");
+                "Engine is null, you must call createEngine before calling this "
+                "method");
         return;
     }
 
@@ -104,11 +117,11 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(
 
 JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(
-    JNIEnv *env, jclass, jint deviceId) {
+        JNIEnv *env, jclass, jint deviceId) {
     if (engine == nullptr) {
         LOGE(
-            "Engine is null, you must call createEngine before calling this "
-            "method");
+                "Engine is null, you must call createEngine before calling this "
+                "method");
         return;
     }
 
@@ -117,12 +130,12 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(
 
 JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env,
-                                                               jclass type,
-                                                               jint apiType) {
+                                                                jclass type,
+                                                                jint apiType) {
     if (engine == nullptr) {
         LOGE(
-            "Engine is null, you must call createEngine "
-            "before calling this method");
+                "Engine is null, you must call createEngine "
+                "before calling this method");
         return JNI_FALSE;
     }
 
@@ -144,11 +157,11 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env,
 
 JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(
-    JNIEnv *env, jclass type) {
+        JNIEnv *env, jclass type) {
     if (engine == nullptr) {
         LOGE(
-            "Engine is null, you must call createEngine "
-            "before calling this method");
+                "Engine is null, you must call createEngine "
+                "before calling this method");
         return JNI_FALSE;
     }
     return engine->isAAudioRecommended() ? JNI_TRUE : JNI_FALSE;
@@ -156,9 +169,9 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(
 
 JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_native_1setDefaultStreamValues(JNIEnv *env,
-                                               jclass type,
-                                               jint sampleRate,
-                                               jint framesPerBurst) {
+                                                                                        jclass type,
+                                                                                        jint sampleRate,
+                                                                                        jint framesPerBurst) {
     oboe::DefaultStreamValues::SampleRate = (int32_t) sampleRate;
     oboe::DefaultStreamValues::FramesPerBurst = (int32_t) framesPerBurst;
 }
