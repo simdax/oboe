@@ -76,13 +76,9 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setGain(JNIEnv *env, jc
     if (engine) {
         {
             if (L_or_R == 0) {
-                engine->mFullDuplexPass.callback->settings.set_gain_L((int) band_id,
-                                                                     (double) newValue);
-//		callback.bands[band_id]->gainL = newValue;
+                engine->mFullDuplexPass.callback->settings.gain_L[(int)band_id] = (double) newValue;
             } else {
-                engine->mFullDuplexPass.callback->settings.set_gain_R((int) band_id,
-                                                                     (double) newValue);
-//		callback.bands[band_id]->gainR = newValue;
+                engine->mFullDuplexPass.callback->settings.gain_R[(int)band_id] = (double) newValue;
             }
         }
     }

@@ -37,14 +37,16 @@ public class MainActivity extends Activity
     private SeekBar Instruments;
     private SeekBar Bass;
     private SeekBar Sub;
+    private SeekBar Clarity;
+    private SeekBar Quiet;
 
-    private SeekBar CreateSlider(int id)
+    private SeekBar CreateSlider(int id, int min, int max)
     {
         SeekBar Slider = findViewById(id);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Slider.setMin(-96);
+            Slider.setMin(min);
         }
-        Slider.setMax(0);
+        Slider.setMax(max);
         Slider.setEnabled(false);
         return Slider;
     }
@@ -53,10 +55,10 @@ public class MainActivity extends Activity
     void Set(CharSequence str, double[] gains)
     {
         Presets.setText(str);
-        Voice.setProgress((int)gains[0]);
-        Instruments.setProgress((int)gains[2]);
-        Bass.setProgress((int)gains[4]);
-        Sub.setProgress((int)gains[6]);
+        //Voice.setProgress((int)gains[0]);
+        //Instruments.setProgress((int)gains[2]);
+        //Bass.setProgress((int)gains[4]);
+        //Sub.setProgress((int)gains[6]);
     }
     native void create(TextView view);
 
@@ -89,10 +91,10 @@ public class MainActivity extends Activity
             }
         });
         Presets = findViewById(R.id.presets);
-        Voice= CreateSlider(R.id.voiceSlider);
-        Instruments = CreateSlider(R.id.InstrumentsSlider);
-        Bass = CreateSlider(R.id.BasseSlider);
-        Sub = CreateSlider(R.id.SubBasseSlider);
+        Voice= CreateSlider(R.id.voiceSlider, -50, 12);
+        Instruments = CreateSlider(R.id.InstrumentsSlider, -50, 12);
+        Bass = CreateSlider(R.id.BasseSlider, 0, 4);
+        Sub = CreateSlider(R.id.SubBasseSlider, 0, 4);
 
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
