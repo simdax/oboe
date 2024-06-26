@@ -55,10 +55,6 @@ public class MainActivity extends Activity
     void Set(CharSequence str, double[] gains)
     {
         Presets.setText(str);
-        //Voice.setProgress((int)gains[0]);
-        //Instruments.setProgress((int)gains[2]);
-        //Bass.setProgress((int)gains[4]);
-        //Sub.setProgress((int)gains[6]);
     }
     native void create(TextView view);
 
@@ -84,17 +80,73 @@ public class MainActivity extends Activity
             public void onClick(View v) {
                 boolean IaOn = LiveEffectEngine.Ai();
 
-                Voice       .setEnabled(!IaOn);
-                Instruments .setEnabled(!IaOn);
-                Bass        .setEnabled(!IaOn);
-                Sub         .setEnabled(!IaOn);
+                for(SeekBar bar: new SeekBar[]{Voice, Instruments, Bass, Sub})
+                {
+                    bar.setEnabled(!IaOn);
+                    if (!IaOn)
+                    {
+                        bar.setProgress(bar.getProgress());
+                    }
+                }
             }
         });
         Presets = findViewById(R.id.presets);
-        Voice= CreateSlider(R.id.voiceSlider, -50, 12);
+
+        Voice = CreateSlider(R.id.voiceSlider, -50, 12);
+        Voice .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                LiveEffectEngine.setGain(1, 1, progress);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
         Instruments = CreateSlider(R.id.InstrumentsSlider, -50, 12);
-        Bass = CreateSlider(R.id.BasseSlider, 0, 4);
+        Instruments.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                LiveEffectEngine.setGain(2, 1, progress);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        double[] bandBassAndSubGen = {-50.0, -10.0, -5.0, 0.0, 2.0};
+        Bass= CreateSlider(R.id.BasseSlider, 0, 4);
+        Bass.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                LiveEffectEngine.setGain(4, 0, bandBassAndSubGen[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
         Sub = CreateSlider(R.id.SubBasseSlider, 0, 4);
+        Sub.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                LiveEffectEngine.setGain(0, 0, bandBassAndSubGen[progress]);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });;
+
 
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
