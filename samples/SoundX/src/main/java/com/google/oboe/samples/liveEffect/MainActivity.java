@@ -37,6 +37,19 @@ public class MainActivity extends Activity
     private SeekBar Instruments;
     private SeekBar Bass;
     private SeekBar Sub;
+
+    private SeekBar CreateSlider(int id)
+    {
+        SeekBar Slider = findViewById(id);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Slider.setMin(-96);
+        }
+        Slider.setMax(0);
+        Slider.setEnabled(false);
+        return Slider;
+    }
+
+    private Button ManualModeButton;
     void Set(CharSequence str, double[] gains)
     {
         Presets.setText(str);
@@ -63,21 +76,23 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ManualModeButton = findViewById(R.id.manualMode);
+        ManualModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean IaOn = LiveEffectEngine.Ai();
+
+                Voice       .setEnabled(!IaOn);
+                Instruments .setEnabled(!IaOn);
+                Bass        .setEnabled(!IaOn);
+                Sub         .setEnabled(!IaOn);
+            }
+        });
         Presets = findViewById(R.id.presets);
-        Voice= findViewById(R.id.voiceSlider);
-        Instruments = findViewById(R.id.InstrumentsSlider);
-        Bass = findViewById(R.id.BasseSlider);
-        Sub = findViewById(R.id.SubBasseSlider);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Voice.setMin(-96);
-            Instruments.setMin(-96);
-            Bass.setMin(-96);
-            Sub.setMin(-96);
-        }
-        Voice.setMax(0);
-        Instruments.setMax(0);
-        Bass.setMax(0);
-        Sub.setMax(0);
+        Voice= CreateSlider(R.id.voiceSlider);
+        Instruments = CreateSlider(R.id.InstrumentsSlider);
+        Bass = CreateSlider(R.id.BasseSlider);
+        Sub = CreateSlider(R.id.SubBasseSlider);
 
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
@@ -189,11 +204,6 @@ public class MainActivity extends Activity
             startEffect();
         }
     }
-
-    public void changeEffect() {
-        LiveEffectEngine.changeProcess();
-    }
-
 
     private void startEffect() {
         Log.d(TAG, "Attempting to start");

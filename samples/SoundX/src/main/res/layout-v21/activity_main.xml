@@ -24,13 +24,14 @@
 
     <RadioGroup
         android:id="@+id/apiSelectionGroup"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recDeviceLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -55,191 +56,145 @@
             android:layout_marginLeft="16dp"
             android:text="@string/sles"
             tools:ignore="TouchTargetSizeCheck" />
+
     </RadioGroup>
 
     <TextView
         android:id="@+id/recDeviceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginStart="16dp"
         android:text="@string/recording_device"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recording_devices_spinner"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/apiSelectionGroup" />
 
     <com.google.oboe.samples.audio_device.AudioDeviceSpinner
         android:id="@+id/recording_devices_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintBottom_toTopOf="@+id/playDeviceLabel"
+        app:layout_constraintStart_toStartOf="@+id/recDeviceLabel"
         app:layout_constraintTop_toBottomOf="@+id/recDeviceLabel" />
 
     <TextView
         android:id="@+id/playDeviceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginStart="16dp"
         android:text="@string/playback_device"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/playback_devices_spinner"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recording_devices_spinner" />
 
     <com.google.oboe.samples.audio_device.AudioDeviceSpinner
         android:id="@+id/playback_devices_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/InstrumentsSlider"
+        app:layout_constraintStart_toStartOf="@+id/playDeviceLabel"
         app:layout_constraintTop_toBottomOf="@+id/playDeviceLabel" />
 
     <Button
         android:id="@+id/button_toggle_effect"
         android:layout_width="183dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginBottom="137dp"
         android:gravity="center"
         android:text="@string/start_effect"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.916"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playback_devices_spinner" />
+        app:layout_constraintBottom_toTopOf="@+id/status_view_text"
+        app:layout_constraintStart_toStartOf="@+id/SubBasseSlider"
+        app:layout_constraintTop_toBottomOf="@+id/SubBasseSlider" />
 
     <TextView
         android:id="@+id/status_view_text"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="304dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_height="0dp"
+        android:layout_marginBottom="26dp"
         android:lines="6"
         android:text="@string/status_warning"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/presets"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
 
     <TextView
         android:id="@+id/presets"
-        android:layout_width="285dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="126dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:text="TextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="18dp"
+        android:text="IA Predictions"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/status_view_text" />
 
     <SeekBar
-        android:id="@+id/SubBasseSlider"
-        android:layout_width="319dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/status_view_text"
+        android:id="@+id/voiceSlider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        app:layout_constraintBottom_toTopOf="@+id/SubBasseSlider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/BasseSlider" />
 
     <SeekBar
         android:id="@+id/InstrumentsSlider"
-        android:layout_width="319dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText3"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        app:layout_constraintBottom_toTopOf="@+id/BasseSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playback_devices_spinner" />
+
+    <SeekBar
+        android:id="@+id/SubBasseSlider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_toggle_effect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/voiceSlider" />
 
     <SeekBar
         android:id="@+id/BasseSlider"
-        android:layout_width="315dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="52dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
-
-    <SeekBar
-        android:id="@+id/voiceSlider"
-        android:layout_width="321dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="156dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="VOIX"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
         app:layout_constraintBottom_toTopOf="@+id/voiceSlider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
-
-    <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginEnd="155dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="INSTRUMENTS"
-        app:layout_constraintBottom_toTopOf="@+id/InstrumentsSlider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="13dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="BASSE"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText4"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InstrumentsSlider" />
 
-    <EditText
-        android:id="@+id/editTextText4"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="2dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="SUB BASSE"
-        app:layout_constraintBottom_toTopOf="@+id/status_view_text"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <Switch
+        android:id="@+id/manualMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="69dp"
+        android:text="Manual mode"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BasseSlider" />
+        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
