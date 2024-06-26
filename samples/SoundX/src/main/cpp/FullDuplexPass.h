@@ -28,8 +28,8 @@ public:
         callback->input1RChannels = { 1 };
         callback->output1LChannels = { 0 };
         callback->output1RChannels = { 1 };
-        callback->output2LChannels = { 2 };
-        callback->output2RChannels = { 3 };
+        callback->output2LChannels = {  };
+        callback->output2RChannels = {  };
         callback->maxIn = 2;
         callback->maxOut = 2;
         callback->settings.ai = true;
