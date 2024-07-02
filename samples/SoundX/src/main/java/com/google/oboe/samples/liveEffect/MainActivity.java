@@ -8,15 +8,20 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+
+import android.os.VibrationEffect;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
@@ -147,8 +152,7 @@ public class MainActivity extends Activity
             }
         });;
 
-
-        statusText = findViewById(R.id.status_view_text);
+            statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
         toggleEffectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,14 +239,32 @@ public class MainActivity extends Activity
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
-    @Override
+    private void VibrateFor(long Time) {
+        Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(Time, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(Time);
+        }
+    }
+
     protected void onResume() {
         super.onResume();
         create(findViewById(R.id.presets));
         mAAudioRecommended = LiveEffectEngine.isAAudioRecommended();
         EnableAudioApiUI(true);
         LiveEffectEngine.setAPI(apiSelection);
+
+        LinearLayout Buttons = findViewById(R.id.linearLayout);
+        for(String Preset : LiveEffectEngine.GetPresets())
+        {
+            Button btnTag = new Button(this);
+            btnTag.setText(Preset);
+            Buttons.addView(btnTag);
+        }
     }
+
     @Override
     protected void onPause() {
         stopEffect();

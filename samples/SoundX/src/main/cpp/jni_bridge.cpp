@@ -1,22 +1,7 @@
-/**
- * Copyright 2018 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #include <jni.h>
 #include <logging_macros.h>
 #include "LiveEffectEngine.h"
+#include "Settings/Settings.h"
 
 static const int kOboeApiAAudio = 0;
 static const int kOboeApiOpenSLES = 1;
@@ -35,16 +20,15 @@ void Update(
         double presetSettings_gain_L_3, double presetSettings_gain_R_3,
         double presetSettings_gain_L_4, double presetSettings_gain_R_4,
         double presetSettings_gain_L_5, double presetSettings_gain_R_5,
-        char* allPreset_data, char* allPresetMeans_data) {
-    JNIEnv* e;
+        char *presets, char *meansData) {
+    JNIEnv *e;
 
     vm->AttachCurrentThread(&e, nullptr);
     if (
-            vm->GetEnv((void**)&e, JNI_VERSION_1_6) == JNI_OK ||
-            vm->GetEnv((void**)&e, JNI_VERSION_1_4) == JNI_OK ||
-            vm->GetEnv((void**)&e, JNI_VERSION_1_2) == JNI_OK ||
-            vm->GetEnv((void**)&e, JNI_VERSION_1_1) == JNI_OK)
-    {
+            vm->GetEnv((void **) &e, JNI_VERSION_1_6) == JNI_OK ||
+            vm->GetEnv((void **) &e, JNI_VERSION_1_4) == JNI_OK ||
+            vm->GetEnv((void **) &e, JNI_VERSION_1_2) == JNI_OK ||
+            vm->GetEnv((void **) &e, JNI_VERSION_1_1) == JNI_OK) {
         std::stringstream ss;
         double cpp_gains[12] = {
                 presetSettings_gain_L_0, presetSettings_gain_R_0,
@@ -55,8 +39,8 @@ void Update(
                 presetSettings_gain_L_5, presetSettings_gain_R_5,
         };
 
-        ss << "Preset: " << allPreset_data << std::endl
-           << "Preset Mean: " << allPresetMeans_data << std::endl;
+        ss << "Preset: " << presets << std::endl
+           << "Preset Mean: " << meansData << std::endl;
         jdoubleArray gains = e->NewDoubleArray(12);
         e->SetDoubleArrayRegion(gains, 0, 12, &cpp_gains[0]);
         e->CallVoidMethod(Text,
@@ -71,21 +55,22 @@ void Update(
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setGain(JNIEnv *env, jclass,jint band_id, jint L_or_R, jdouble newValue)
-{
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setGain(JNIEnv *env, jclass, jint band_id,
+                                                                 jint L_or_R, jdouble newValue) {
     if (engine) {
         {
             if (L_or_R == 0) {
-                engine->mFullDuplexPass.callback->settings.gain_L[(int)band_id] = (double) newValue;
+                engine->mFullDuplexPass.callback->settings.gain_L[(int) band_id] = (double) newValue;
             } else {
-                engine->mFullDuplexPass.callback->settings.gain_R[(int)band_id] = (double) newValue;
+                engine->mFullDuplexPass.callback->settings.gain_R[(int) band_id] = (double) newValue;
             }
         }
     }
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env,          jobject obj,        jobject View) {
+Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env, jobject obj,
+                                                            jobject View) {
     if (engine == nullptr) {
         engine = new LiveEffectEngine();
     }
@@ -96,19 +81,19 @@ Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env,        
 
 JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Ai(JNIEnv *env,
-                                                            jclass,
-                                                            jboolean value) {
+                                                            jclass
+) {
     if (engine) {
         engine->mFullDuplexPass.callback->settings.ai =
                 !engine->mFullDuplexPass.callback->settings.ai;
     }
     return engine->mFullDuplexPass.callback->settings.ai ?
-           JNI_TRUE:
+           JNI_TRUE :
            JNI_FALSE;
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env,        jclass) {
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env, jclass) {
     if (engine) {
         engine->setEffectOn(false);
         delete engine;
@@ -130,7 +115,8 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setEffectOn(
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(  JNIEnv *env, jclass, jint deviceId) {
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(JNIEnv *env, jclass,
+                                                                              jint deviceId) {
     if (engine == nullptr) {
         LOGE(
                 "Engine is null, you must call createEngine before calling this "
@@ -142,7 +128,8 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(  
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(  JNIEnv *env, jclass, jint deviceId) {
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(JNIEnv *env, jclass,
+                                                                             jint deviceId) {
     if (engine == nullptr) {
         LOGE(
                 "Engine is null, you must call createEngine before calling this "
@@ -154,7 +141,8 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(  J
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env,     jclass type,     jint apiType) {
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env, jclass type,
+                                                                jint apiType) {
     if (engine == nullptr) {
         LOGE(
                 "Engine is null, you must call createEngine "
@@ -179,7 +167,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env,    
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(  JNIEnv *env, jclass type) {
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(JNIEnv *env, jclass type) {
     if (engine == nullptr) {
         LOGE(
                 "Engine is null, you must call createEngine "
@@ -190,8 +178,29 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(  J
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_native_1setDefaultStreamValues(JNIEnv *env,  jclass type, jint sampleRate,         jint framesPerBurst) {
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_native_1setDefaultStreamValues(JNIEnv *env,
+                                                                                        jclass type,
+                                                                                        jint sampleRate,
+                                                                                        jint framesPerBurst) {
     oboe::DefaultStreamValues::SampleRate = (int32_t) sampleRate;
     oboe::DefaultStreamValues::FramesPerBurst = (int32_t) framesPerBurst;
 }
-} // extern "C"
+
+JNIEXPORT jobjectArray JNICALL
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_GetPresets(JNIEnv *env, jclass clazz) {
+    auto cppPresets = engine->mFullDuplexPass.callback->settings.Presets;
+    jobjectArray Presets = env->NewObjectArray(cppPresets.size(), env->FindClass("java/lang/String"), {}) ;
+    int i = 0;
+
+    for (const auto& [cat, _] : cppPresets)
+    {
+            env->SetObjectArrayElement(
+                    Presets, i,
+                    env->NewStringUTF(cat.c_str())
+                    );
+            i++;
+    }
+    return Presets;
+}
+
+}
