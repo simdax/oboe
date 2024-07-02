@@ -57,6 +57,8 @@ public class MainActivity extends Activity
     }
 
     private Button ManualModeButton;
+    private Button VibrationPresetsButton;
+    private LinearLayout VibrationPresets;
     void Set(CharSequence str, double[] gains)
     {
         Presets.setText(str);
@@ -65,8 +67,6 @@ public class MainActivity extends Activity
 
     private TextView statusText;
     private Button toggleEffectButton;
-    private Button changeEffectButton;
-    private Button presetsButton;
     private AudioDeviceSpinner recordingDeviceSpinner;
     private AudioDeviceSpinner playbackDeviceSpinner;
     private boolean isPlaying = false;
@@ -150,9 +150,20 @@ public class MainActivity extends Activity
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
-        });;
+        });
 
-            statusText = findViewById(R.id.status_view_text);
+        VibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
+        VibrationPresetsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VibrationPresets.setVisibility(
+                        VibrationPresets.getVisibility() == View.INVISIBLE ?
+                        View.VISIBLE : View.INVISIBLE);
+            }
+        });
+
+
+        statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
         toggleEffectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,12 +267,13 @@ public class MainActivity extends Activity
         EnableAudioApiUI(true);
         LiveEffectEngine.setAPI(apiSelection);
 
-        LinearLayout Buttons = findViewById(R.id.linearLayout);
+        VibrationPresets = findViewById(R.id.linearLayout);
+        VibrationPresets.setVisibility(View.INVISIBLE);
         for(String Preset : LiveEffectEngine.GetPresets())
         {
             Button btnTag = new Button(this);
             btnTag.setText(Preset);
-            Buttons.addView(btnTag);
+            VibrationPresets.addView(btnTag);
         }
     }
 

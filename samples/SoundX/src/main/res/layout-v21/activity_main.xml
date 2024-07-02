@@ -123,8 +123,8 @@
 
     <TextView
         android:id="@+id/presets"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="299dp"
+        android:layout_height="57dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="18dp"
@@ -191,9 +191,8 @@
         android:id="@+id/manualMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginBottom="34dp"
-        android:text="Manual mode"
+        android:layout_marginBottom="1dp"
+        android:text="No IA mode"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -202,8 +201,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
-        android:layout_height="105dp"
+        android:layout_width="396dp"
+        android:layout_height="51dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="1dp"
@@ -211,7 +210,33 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/presets"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/manualMode"/>
+        app:layout_constraintTop_toBottomOf="@+id/manualMode" />
+
+    <Button
+        android:id="@+id/VibrationPresetsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="5dp"
+        android:text="Presets"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/switch1"
+        app:layout_constraintTop_toBottomOf="@+id/manualMode"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="32dp"
+        android:text="Vibrations"
+        app:layout_constraintEnd_toStartOf="@+id/VibrationPresetsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
