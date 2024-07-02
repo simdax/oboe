@@ -1,16 +1,20 @@
 package com.google.oboe.samples.liveEffect;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.VibrationEffect;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +30,7 @@ import android.os.Vibrator;
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = MainActivity.class.getName();
@@ -56,6 +60,7 @@ public class MainActivity extends Activity
         return Slider;
     }
 
+    private FragmentManager supportFragmentManager;
     private Button ManualModeButton;
     private Button VibrationPresetsButton;
     private LinearLayout VibrationPresets;
@@ -156,9 +161,10 @@ public class MainActivity extends Activity
         VibrationPresetsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VibrationPresets.setVisibility(
-                        VibrationPresets.getVisibility() == View.INVISIBLE ?
-                        View.VISIBLE : View.INVISIBLE);
+                new coucou().show(getSupportFragmentManager(), "GAME_DIALOG");
+                //VibrationPresets.setVisibility(
+                //        VibrationPresets.getVisibility() == View.INVISIBLE ?
+                //        View.VISIBLE : View.INVISIBLE);
             }
         });
 
