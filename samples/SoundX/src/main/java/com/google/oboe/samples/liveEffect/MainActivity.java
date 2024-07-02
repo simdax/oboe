@@ -1,16 +1,12 @@
 package com.google.oboe.samples.liveEffect;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -48,6 +44,7 @@ public class MainActivity extends FragmentActivity
     private SeekBar Sub;
     private SeekBar Clarity;
     private SeekBar Quiet;
+    private PresetVibrations PresetVibrations;
 
     private SeekBar CreateSlider(int id, int min, int max)
     {
@@ -157,17 +154,14 @@ public class MainActivity extends FragmentActivity
             }
         });
 
+        PresetVibrations = new PresetVibrations();
         VibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
         VibrationPresetsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new coucou().show(getSupportFragmentManager(), "GAME_DIALOG");
-                //VibrationPresets.setVisibility(
-                //        VibrationPresets.getVisibility() == View.INVISIBLE ?
-                //        View.VISIBLE : View.INVISIBLE);
+                PresetVibrations.show(getSupportFragmentManager(), "Vibrations");
             }
         });
-
 
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
@@ -272,15 +266,7 @@ public class MainActivity extends FragmentActivity
         mAAudioRecommended = LiveEffectEngine.isAAudioRecommended();
         EnableAudioApiUI(true);
         LiveEffectEngine.setAPI(apiSelection);
-
-        VibrationPresets = findViewById(R.id.linearLayout);
-        VibrationPresets.setVisibility(View.INVISIBLE);
-        for(String Preset : LiveEffectEngine.GetPresets())
-        {
-            Button btnTag = new Button(this);
-            btnTag.setText(Preset);
-            VibrationPresets.addView(btnTag);
-        }
+        PresetVibrations.setPresets(LiveEffectEngine.GetPresets());
     }
 
     @Override
