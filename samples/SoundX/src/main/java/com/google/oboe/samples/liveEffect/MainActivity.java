@@ -26,6 +26,8 @@ import android.os.Vibrator;
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 
+import java.util.Arrays;
+
 public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -58,13 +60,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private FragmentManager supportFragmentManager;
-    private Button ManualModeButton;
-    private Button VibrationPresetsButton;
-    private LinearLayout VibrationPresets;
-    void Set(CharSequence str, double[] gains)
-    {
-        Presets.setText(str);
-    }
+
     native void create(TextView view);
 
     private TextView statusText;
@@ -76,13 +72,23 @@ public class MainActivity extends FragmentActivity
     private int apiSelection = OBOE_API_AAUDIO;
     private boolean mAAudioRecommended = true;
 
+    void Set(CharSequence str, double[] gains)
+    {
+        Presets.setText(str);
+        int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
+        if (i != -1 && PresetVibrations.CheckItems[i])
+        {
+            VibrateFor(300);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ManualModeButton = findViewById(R.id.manualMode);
-        ManualModeButton.setOnClickListener(new View.OnClickListener() {
+        Button manualModeButton = findViewById(R.id.manualMode);
+        manualModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean IaOn = LiveEffectEngine.Ai();
@@ -155,8 +161,8 @@ public class MainActivity extends FragmentActivity
         });
 
         PresetVibrations = new PresetVibrations();
-        VibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
-        VibrationPresetsButton.setOnClickListener(new View.OnClickListener() {
+        Button vibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
+        vibrationPresetsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PresetVibrations.show(getSupportFragmentManager(), "Vibrations");

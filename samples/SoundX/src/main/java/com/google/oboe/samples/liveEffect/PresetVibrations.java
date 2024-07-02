@@ -9,13 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 public class PresetVibrations extends DialogFragment {
-    boolean[] CheckItems;
-    String[] Presets;
+    public boolean[] CheckItems = null;
+    public CharSequence[] Presets = null;
 
     public void setPresets(String[] P)
     {
         Presets = P;
-        if (CheckItems.length == 0)
+        if (CheckItems == null)
         {
             CheckItems = new boolean[Presets.length];
         }
@@ -29,7 +29,6 @@ public class PresetVibrations extends DialogFragment {
         builder
                 .setTitle("Vibration Preset")
                 .setPositiveButton("OK", (dialog, which) -> {
-
                 })
                 .setMultiChoiceItems(Presets, CheckItems,
                         new DialogInterface.OnMultiChoiceClickListener() {
