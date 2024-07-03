@@ -8,14 +8,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -47,6 +45,7 @@ public class MainActivity extends FragmentActivity
     private SeekBar Clarity;
     private SeekBar Quiet;
     private PresetVibrations PresetVibrations;
+    private CustomizeIA CustomizeIA;
 
     private SeekBar CreateSlider(int id, int min, int max)
     {
@@ -58,8 +57,6 @@ public class MainActivity extends FragmentActivity
         Slider.setEnabled(false);
         return Slider;
     }
-
-    private FragmentManager supportFragmentManager;
 
     native void create(TextView view);
 
@@ -87,6 +84,7 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.VibrationLayout).setVisibility(View.INVISIBLE);
         Button manualModeButton = findViewById(R.id.manualMode);
         manualModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +164,15 @@ public class MainActivity extends FragmentActivity
             @Override
             public void onClick(View v) {
                 PresetVibrations.show(getSupportFragmentManager(), "Vibrations");
+            }
+        });
+
+        CustomizeIA = new CustomizeIA();
+        Button CustomizeButton= findViewById(R.id.customize);
+        CustomizeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomizeIA.show(getSupportFragmentManager(), "Customize");
             }
         });
 
