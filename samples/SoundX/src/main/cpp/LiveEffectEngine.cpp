@@ -106,7 +106,6 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupRecordingStreamParameters(
     builder->setDeviceId(mRecordingDeviceId)
             ->setDirection(oboe::Direction::Input)
             ->setSampleRate(sampleRate)
-            ->setFramesPerDataCallback(128)
             ->setChannelCount(mInputChannelCount);
     return setupCommonStreamParameters(builder);
 }
@@ -121,7 +120,6 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupPlaybackStreamParameters(
         oboe::AudioStreamBuilder *builder) {
     builder->setDataCallback(this)
             ->setErrorCallback(this)
-            ->setFramesPerDataCallback(128)
             ->setDeviceId(mPlaybackDeviceId)
             ->setDirection(oboe::Direction::Output)
             ->setChannelCount(mOutputChannelCount);

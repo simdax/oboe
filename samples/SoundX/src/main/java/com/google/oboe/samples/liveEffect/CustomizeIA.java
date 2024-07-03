@@ -26,7 +26,6 @@ public class CustomizeIA extends DialogFragment {
             Slider.setMin(min);
         }
         Slider.setMax(max);
-        Slider.setEnabled(false);
         return Slider;
     }
 
