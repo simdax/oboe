@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/VibrationLayout"
+    android:layout_width="344dp"
+    android:layout_height="192dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="40dp"
+    android:orientation="vertical"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/manualMode"
+    tools:showIn="@layout/activity_main">
+
+    <SeekBar
+        android:id="@+id/voiceSlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <SeekBar
+        android:id="@+id/SubBasseSlider"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <SeekBar
+        android:id="@+id/InstrumentsSlider"
+        android:layout_width="match_parent"
+        android:layout_height="46dp" />
+
+    <SeekBar
+        android:id="@+id/BasseSlider"
+        android:layout_width="match_parent"
+        android:layout_height="52dp" />
+</LinearLayout>

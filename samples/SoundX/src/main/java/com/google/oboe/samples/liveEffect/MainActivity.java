@@ -38,25 +38,9 @@ public class MainActivity extends FragmentActivity
         System.loadLibrary("liveEffect");
     }
     private TextView Presets;
-    private SeekBar Voice;
-    private SeekBar Instruments;
-    private SeekBar Bass;
-    private SeekBar Sub;
-    private SeekBar Clarity;
-    private SeekBar Quiet;
+
     private PresetVibrations PresetVibrations;
     private CustomizeIA CustomizeIA;
-
-    private SeekBar CreateSlider(int id, int min, int max)
-    {
-        SeekBar Slider = findViewById(id);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Slider.setMin(min);
-        }
-        Slider.setMax(max);
-        Slider.setEnabled(false);
-        return Slider;
-    }
 
     native void create(TextView view);
 
@@ -69,7 +53,7 @@ public class MainActivity extends FragmentActivity
     private int apiSelection = OBOE_API_AAUDIO;
     private boolean mAAudioRecommended = true;
 
-    void Set(CharSequence str, double[] gains)
+    void Set(CharSequence str)
     {
         Presets.setText(str);
         int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
@@ -84,106 +68,19 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.VibrationLayout).setVisibility(View.INVISIBLE);
-        Button manualModeButton = findViewById(R.id.manualMode);
-        manualModeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean IaOn = LiveEffectEngine.Ai();
-
-                for(SeekBar bar: new SeekBar[]{Voice, Instruments, Bass, Sub})
-                {
-                    bar.setEnabled(!IaOn);
-                    if (!IaOn)
-                    {
-                        bar.setProgress(bar.getProgress());
-                    }
-                }
-            }
-        });
+        //findViewById(R.id.VibrationLayout).setVisibility(View.INVISIBLE);
         Presets = findViewById(R.id.presets);
-
-        Voice = CreateSlider(R.id.voiceSlider, -50, 12);
-        Voice .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LiveEffectEngine.setGain(1, 1, progress);
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-        Instruments = CreateSlider(R.id.InstrumentsSlider, -50, 12);
-        Instruments.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LiveEffectEngine.setGain(2, 1, progress);
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-        double[] bandBassAndSubGen = {-50.0, -10.0, -5.0, 0.0, 2.0};
-        Bass= CreateSlider(R.id.BasseSlider, 0, 4);
-        Bass.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LiveEffectEngine.setGain(4, 0, bandBassAndSubGen[progress]);
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-        Sub = CreateSlider(R.id.SubBasseSlider, 0, 4);
-        Sub.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LiveEffectEngine.setGain(0, 0, bandBassAndSubGen[progress]);
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
         PresetVibrations = new PresetVibrations();
         Button vibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
-        vibrationPresetsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PresetVibrations.show(getSupportFragmentManager(), "Vibrations");
-            }
-        });
+        vibrationPresetsButton.setOnClickListener(v -> PresetVibrations.show(getSupportFragmentManager(), "Vibrations"));
 
         CustomizeIA = new CustomizeIA();
         Button CustomizeButton= findViewById(R.id.customize);
-        CustomizeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomizeIA.show(getSupportFragmentManager(), "Customize");
-            }
-        });
+        CustomizeButton.setOnClickListener(v -> CustomizeIA.show(getSupportFragmentManager(), "Customize"));
 
         statusText = findViewById(R.id.status_view_text);
         toggleEffectButton = findViewById(R.id.button_toggle_effect);
-        toggleEffectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleEffect();
-            }
-        });
+        toggleEffectButton.setOnClickListener(view -> toggleEffect());
         toggleEffectButton.setText(getString(R.string.start_effect));
         recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
