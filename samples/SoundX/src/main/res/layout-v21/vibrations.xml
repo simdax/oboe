@@ -18,17 +18,28 @@
         android:layout_height="48dp" />
 
     <SeekBar
-        android:id="@+id/SubBasseSlider"
-        android:layout_width="match_parent"
-        android:layout_height="45dp" />
-
-    <SeekBar
         android:id="@+id/InstrumentsSlider"
         android:layout_width="match_parent"
-        android:layout_height="46dp" />
+        android:layout_height="48dp" />
 
     <SeekBar
         android:id="@+id/BasseSlider"
         android:layout_width="match_parent"
-        android:layout_height="52dp" />
+        android:layout_height="48dp" />
+
+    <SeekBar
+        android:id="@+id/SubBasseSlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <SeekBar
+        android:id="@+id/ClaritySlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <SeekBar
+        android:id="@+id/QuietSlider"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
 </LinearLayout>
