@@ -114,14 +114,16 @@
 
     <TextView
         android:id="@+id/status_view_text"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="222dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="96dp"
         android:layout_marginBottom="26dp"
         android:lines="6"
         android:text="@string/status_warning"
         app:layout_constraintBottom_toTopOf="@+id/presets"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
+        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect"
+        app:layout_constraintVertical_bias="0.513" />
 
     <TextView
         android:id="@+id/presets"
