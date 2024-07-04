@@ -140,7 +140,7 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupCommonStreamParameters(
     // mode.
     builder->setAudioApi(mAudioApi)
             ->setFormat(mFormat)
-            ->setFramesPerDataCallback(128)
+            //->setFramesPerDataCallback(16)
             ->setFormatConversionAllowed(true)
             ->setSharingMode(oboe::SharingMode::Exclusive)
             ->setPerformanceMode(oboe::PerformanceMode::LowLatency);
