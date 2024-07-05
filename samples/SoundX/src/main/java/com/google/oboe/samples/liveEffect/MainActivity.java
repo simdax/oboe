@@ -181,8 +181,8 @@ public class MainActivity extends FragmentActivity
 
     @Override
     protected void onPause() {
-        stopEffect();
-        LiveEffectEngine.delete();
+        //stopEffect();
+        //LiveEffectEngine.delete();
         super.onPause();
     }
 
