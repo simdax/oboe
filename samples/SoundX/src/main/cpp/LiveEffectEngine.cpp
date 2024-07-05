@@ -105,7 +105,7 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupRecordingStreamParameters(
     // This sample uses blocking read() because we don't specify a callback
     builder->setDeviceId(mRecordingDeviceId)
             ->setDirection(oboe::Direction::Input)
-            ->setSampleRate(sampleRate)
+//            ->setSampleRate(sampleRate)
             ->setChannelCount(mInputChannelCount);
     return setupCommonStreamParameters(builder);
 }
@@ -140,8 +140,6 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupCommonStreamParameters(
     // mode.
     builder->setAudioApi(mAudioApi)
             ->setFormat(mFormat)
-            //->setFramesPerDataCallback(16)
-            ->setFormatConversionAllowed(true)
             ->setSharingMode(oboe::SharingMode::Exclusive)
             ->setPerformanceMode(oboe::PerformanceMode::LowLatency);
     return builder;

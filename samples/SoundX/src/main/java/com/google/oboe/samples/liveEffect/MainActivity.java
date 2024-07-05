@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Vibrator;
@@ -53,14 +52,14 @@ public class MainActivity extends FragmentActivity
     private int apiSelection = OBOE_API_AAUDIO;
     private boolean mAAudioRecommended = true;
 
-    void Set(CharSequence str)
+    void Set(CharSequence str, double[] gains)
     {
         Presets.setText(str);
-        int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
-        if (i != -1 && PresetVibrations.CheckItems[i])
-        {
-            VibrateFor(300);
-        }
+       // int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
+       // if (i != -1 && PresetVibrations.CheckItems[i])
+       // {
+       //     VibrateFor(300);
+       // }
     }
 
     @Override
@@ -115,22 +114,16 @@ public class MainActivity extends FragmentActivity
         }
 
         ((RadioGroup)findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
-        findViewById(R.id.aaudioButton).setOnClickListener(new RadioButton.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (((RadioButton)v).isChecked()) {
-                    apiSelection = OBOE_API_AAUDIO;
-                    setSpinnersEnabled(true);
-                }
+        findViewById(R.id.aaudioButton).setOnClickListener(v -> {
+            if (((RadioButton)v).isChecked()) {
+                apiSelection = OBOE_API_AAUDIO;
+                setSpinnersEnabled(true);
             }
         });
-        findViewById(R.id.slesButton).setOnClickListener(new RadioButton.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (((RadioButton)v).isChecked()) {
-                    apiSelection = OBOE_API_OPENSL_ES;
-                    setSpinnersEnabled(false);
-                }
+        findViewById(R.id.slesButton).setOnClickListener(v -> {
+            if (((RadioButton)v).isChecked()) {
+                apiSelection = OBOE_API_OPENSL_ES;
+                setSpinnersEnabled(false);
             }
         });
 

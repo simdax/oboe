@@ -17,7 +17,7 @@ public:
         callback->maxIn = 2;
         callback->maxOut = 2;
         callback->settings.ai = true;
-        callback->CompressorOn = false;
+        callback->CompressorOn = true;
         callback->settings.fadeOn = false;
         callback->settings.peakFilter = false;
         callback->settings.samplerate = 48000;
@@ -41,10 +41,8 @@ public:
             int   numOutputFrames) {
         const float *inputFloats = static_cast<const float *>(inputData);
         float *outputFloats = static_cast<float *>(outputData);
-        int32_t samplesPerFrame = getOutputStream()->getChannelCount();
-        int32_t numInputSamples = numInputFrames * samplesPerFrame;
 
-        callback->tick(inputFloats, outputFloats, numInputFrames); // * 0.515; // do some arbitrary processing
+        callback->tick(inputFloats, outputFloats, numInputFrames);
         return oboe::DataCallbackResult::Continue;
     }
 
