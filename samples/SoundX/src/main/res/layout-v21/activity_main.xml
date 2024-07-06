@@ -23,121 +23,44 @@
     tools:layout_editor_absoluteX="-9dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <RadioGroup
-        android:id="@+id/apiSelectionGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/recDeviceLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/apiTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/apiSelection" />
-
-        <RadioButton
-            android:id="@+id/aaudioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="@string/aaudio" />
-
-        <RadioButton
-            android:id="@+id/slesButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="@string/sles"
-            tools:ignore="TouchTargetSizeCheck" />
-
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/recDeviceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/recording_device"
-        app:layout_constraintBottom_toTopOf="@+id/recording_devices_spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apiSelectionGroup" />
-
-    <com.google.oboe.samples.audio_device.AudioDeviceSpinner
-        android:id="@+id/recording_devices_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/playDeviceLabel"
-        app:layout_constraintStart_toStartOf="@+id/recDeviceLabel"
-        app:layout_constraintTop_toBottomOf="@+id/recDeviceLabel" />
-
-    <TextView
-        android:id="@+id/playDeviceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="@string/playback_device"
-        app:layout_constraintBottom_toTopOf="@+id/playback_devices_spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recording_devices_spinner" />
-
-    <com.google.oboe.samples.audio_device.AudioDeviceSpinner
-        android:id="@+id/playback_devices_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/presets"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playDeviceLabel" />
-
     <Button
         android:id="@+id/button_toggle_effect"
         android:layout_width="183dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginBottom="17dp"
         android:gravity="center"
         android:text="@string/start_effect"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/status_view_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/presets" />
 
     <TextView
         android:id="@+id/status_view_text"
         android:layout_width="222dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginBottom="26dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="124dp"
         android:lines="6"
         android:text="@string/status_warning"
-        app:layout_constraintBottom_toTopOf="@+id/presets"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect"
-        app:layout_constraintVertical_bias="0.513" />
+        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
 
     <TextView
         android:id="@+id/presets"
-        android:layout_width="299dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
+        android:layout_width="296dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="32dp"
         android:text="IA Predictions"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_toggle_effect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -146,45 +69,38 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
 
-    <Switch
-        android:id="@+id/manualMode"
-        android:layout_width="154dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="68dp"
-        android:text="No IA mode"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="326dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="19dp"
+        android:text="Le pouvoir de l'inclusivité.\nDans votre poche."
+        android:textAlignment="center"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/VibrationPresetsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="20dp"
-        android:text="Presets"
-        app:layout_constraintStart_toEndOf="@+id/switch1"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="152dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="28dp"
-        android:text="Vibrations"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="326dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="28dp"
+        android:text="Activez la première IA qui traduit en temps réel le son en vibrations. Fait pour et par la communauté sourde."
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/presets"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
-
-    <Button
-        android:id="@+id/customize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="12dp"
-        android:text="customize"
-        app:layout_constraintStart_toEndOf="@+id/manualMode"
-        app:layout_constraintTop_toBottomOf="@+id/VibrationPresetsButton" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

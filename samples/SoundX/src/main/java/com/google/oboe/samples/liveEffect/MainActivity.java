@@ -67,65 +67,65 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //findViewById(R.id.VibrationLayout).setVisibility(View.INVISIBLE);
         Presets = findViewById(R.id.presets);
-        PresetVibrations = new PresetVibrations();
-        Button vibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
-        vibrationPresetsButton.setOnClickListener(v -> PresetVibrations.show(getSupportFragmentManager(), "Vibrations"));
 
-        CustomizeIA = new CustomizeIA();
-        Button CustomizeButton= findViewById(R.id.customize);
-        CustomizeButton.setOnClickListener(v -> CustomizeIA.show(getSupportFragmentManager(), "Customize"));
+        //PresetVibrations = new PresetVibrations();
+        //Button vibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
+        //vibrationPresetsButton.setOnClickListener(v -> PresetVibrations.show(getSupportFragmentManager(), "Vibrations"));
 
-        statusText = findViewById(R.id.status_view_text);
-        toggleEffectButton = findViewById(R.id.button_toggle_effect);
-        toggleEffectButton.setOnClickListener(view -> toggleEffect());
-        toggleEffectButton.setText(getString(R.string.start_effect));
-        recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            recordingDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_INPUTS);
-            recordingDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    LiveEffectEngine.setRecordingDeviceId(getRecordingDeviceId());
-                }
+        //CustomizeIA = new CustomizeIA();
+        //Button CustomizeButton= findViewById(R.id.customize);
+        //CustomizeButton.setOnClickListener(v -> CustomizeIA.show(getSupportFragmentManager(), "Customize"));
 
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    // Do nothing
-                }
-            });
-        }
+        //statusText = findViewById(R.id.status_view_text);
+        //toggleEffectButton = findViewById(R.id.button_toggle_effect);
+        //toggleEffectButton.setOnClickListener(view -> toggleEffect());
+        //toggleEffectButton.setText(getString(R.string.start_effect));
+        //recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //    recordingDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_INPUTS);
+        //    recordingDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //        @Override
+        //        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        //            LiveEffectEngine.setRecordingDeviceId(getRecordingDeviceId());
+        //        }
 
-        playbackDeviceSpinner = findViewById(R.id.playback_devices_spinner);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            playbackDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_OUTPUTS);
-            playbackDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    LiveEffectEngine.setPlaybackDeviceId(getPlaybackDeviceId());
-                }
+        //        @Override
+        //        public void onNothingSelected(AdapterView<?> adapterView) {
+        //            // Do nothing
+        //        }
+        //    });
+        //}
 
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    // Do nothing
-                }
-            });
-        }
+        //playbackDeviceSpinner = findViewById(R.id.playback_devices_spinner);
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //    playbackDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_OUTPUTS);
+        //    playbackDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //        @Override
+        //        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        //            LiveEffectEngine.setPlaybackDeviceId(getPlaybackDeviceId());
+        //        }
 
-        ((RadioGroup)findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
-        findViewById(R.id.aaudioButton).setOnClickListener(v -> {
-            if (((RadioButton)v).isChecked()) {
-                apiSelection = OBOE_API_AAUDIO;
-                setSpinnersEnabled(true);
-            }
-        });
-        findViewById(R.id.slesButton).setOnClickListener(v -> {
-            if (((RadioButton)v).isChecked()) {
-                apiSelection = OBOE_API_OPENSL_ES;
-                setSpinnersEnabled(false);
-            }
-        });
+        //        @Override
+        //        public void onNothingSelected(AdapterView<?> adapterView) {
+        //            // Do nothing
+        //        }
+        //    });
+        //}
+
+        //((RadioGroup)findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
+        //findViewById(R.id.aaudioButton).setOnClickListener(v -> {
+        //    if (((RadioButton)v).isChecked()) {
+        //        apiSelection = OBOE_API_AAUDIO;
+        //        setSpinnersEnabled(true);
+        //    }
+        //});
+        //findViewById(R.id.slesButton).setOnClickListener(v -> {
+        //    if (((RadioButton)v).isChecked()) {
+        //        apiSelection = OBOE_API_OPENSL_ES;
+        //        setSpinnersEnabled(false);
+        //    }
+        //});
 
         LiveEffectEngine.setDefaultStreamValues(this);
     }
@@ -166,10 +166,10 @@ public class MainActivity extends FragmentActivity
     protected void onResume() {
         super.onResume();
         create(findViewById(R.id.presets));
-        mAAudioRecommended = LiveEffectEngine.isAAudioRecommended();
-        EnableAudioApiUI(true);
-        LiveEffectEngine.setAPI(apiSelection);
-        PresetVibrations.setPresets(LiveEffectEngine.GetPresets());
+        //mAAudioRecommended = LiveEffectEngine.isAAudioRecommended();
+        //EnableAudioApiUI(true);
+        //LiveEffectEngine.setAPI(apiSelection);
+        //PresetVibrations.setPresets(LiveEffectEngine.GetPresets());
     }
 
     @Override
