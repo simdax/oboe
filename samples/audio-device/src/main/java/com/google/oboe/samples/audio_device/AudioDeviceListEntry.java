@@ -18,6 +18,7 @@ package com.google.oboe.samples.audio_device;
 import android.annotation.TargetApi;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
+import android.util.Log;
 
 import java.util.List;
 import java.util.Vector;
@@ -87,8 +88,10 @@ public class AudioDeviceListEntry {
                             && info.getType() == AudioDeviceInfo.TYPE_USB_DEVICE
                     ) ||
                     (directionType == AudioManager.GET_DEVICES_INPUTS && info.isSource())) {
-                listEntries.add(new AudioDeviceListEntry(info.getId(), info.getProductName() + " " +
-                                AudioDeviceInfoConverter.typeToString(info.getType())));
+                String name = info.getProductName() + " " +
+                        AudioDeviceInfoConverter.typeToString(info.getType());
+                listEntries.add(new AudioDeviceListEntry(info.getId(), name));
+                Log.w("device", name);
             }
         }
         return listEntries;

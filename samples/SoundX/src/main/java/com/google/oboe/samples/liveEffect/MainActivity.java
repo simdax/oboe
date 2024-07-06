@@ -68,6 +68,7 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
 
         Presets = findViewById(R.id.presets);
+        statusText = findViewById(R.id.status_view_text);
 
         //PresetVibrations = new PresetVibrations();
         //Button vibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
@@ -77,56 +78,50 @@ public class MainActivity extends FragmentActivity
         //Button CustomizeButton= findViewById(R.id.customize);
         //CustomizeButton.setOnClickListener(v -> CustomizeIA.show(getSupportFragmentManager(), "Customize"));
 
-        //statusText = findViewById(R.id.status_view_text);
-        //toggleEffectButton = findViewById(R.id.button_toggle_effect);
-        //toggleEffectButton.setOnClickListener(view -> toggleEffect());
-        //toggleEffectButton.setText(getString(R.string.start_effect));
-        //recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        //    recordingDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_INPUTS);
-        //    recordingDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        //        @Override
-        //        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //            LiveEffectEngine.setRecordingDeviceId(getRecordingDeviceId());
-        //        }
-
-        //        @Override
-        //        public void onNothingSelected(AdapterView<?> adapterView) {
-        //            // Do nothing
-        //        }
-        //    });
-        //}
-
-        //playbackDeviceSpinner = findViewById(R.id.playback_devices_spinner);
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        //    playbackDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_OUTPUTS);
-        //    playbackDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        //        @Override
-        //        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //            LiveEffectEngine.setPlaybackDeviceId(getPlaybackDeviceId());
-        //        }
-
-        //        @Override
-        //        public void onNothingSelected(AdapterView<?> adapterView) {
-        //            // Do nothing
-        //        }
-        //    });
-        //}
-
-        //((RadioGroup)findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
-        //findViewById(R.id.aaudioButton).setOnClickListener(v -> {
-        //    if (((RadioButton)v).isChecked()) {
-        //        apiSelection = OBOE_API_AAUDIO;
-        //        setSpinnersEnabled(true);
-        //    }
-        //});
-        //findViewById(R.id.slesButton).setOnClickListener(v -> {
-        //    if (((RadioButton)v).isChecked()) {
-        //        apiSelection = OBOE_API_OPENSL_ES;
-        //        setSpinnersEnabled(false);
-        //    }
-        //});
-
+        toggleEffectButton = findViewById(R.id.button_toggle_effect);
+        toggleEffectButton.setOnClickListener(view -> toggleEffect());
+        toggleEffectButton.setText(getString(R.string.start_effect));
+        recordingDeviceSpinner = findViewById(R.id.recording_devices_spinner);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            recordingDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_INPUTS);
+            recordingDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    LiveEffectEngine.setRecordingDeviceId(getRecordingDeviceId());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    // Do nothing
+                }
+            });
+        }
+        playbackDeviceSpinner = findViewById(R.id.playback_devices_spinner);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            playbackDeviceSpinner.setDirectionType(AudioManager.GET_DEVICES_OUTPUTS);
+            playbackDeviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    LiveEffectEngine.setPlaybackDeviceId(getPlaybackDeviceId());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    // Do nothing
+                }
+            });
+        }
+        ((RadioGroup)findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
+        findViewById(R.id.aaudioButton).setOnClickListener(v -> {
+            if (((RadioButton)v).isChecked()) {
+                apiSelection = OBOE_API_AAUDIO;
+                setSpinnersEnabled(true);
+            }
+        });
+        findViewById(R.id.slesButton).setOnClickListener(v -> {
+            if (((RadioButton)v).isChecked()) {
+                apiSelection = OBOE_API_OPENSL_ES;
+                setSpinnersEnabled(false);
+            }
+        });
         LiveEffectEngine.setDefaultStreamValues(this);
     }
 
