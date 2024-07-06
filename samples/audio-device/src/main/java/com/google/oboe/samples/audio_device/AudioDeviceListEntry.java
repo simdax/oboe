@@ -81,7 +81,7 @@ public class AudioDeviceListEntry {
 
         List<AudioDeviceListEntry> listEntries = new Vector<>();
         for (AudioDeviceInfo info : devices) {
-            if (directionType == AudioManager.GET_DEVICES_ALL ||
+            if ( // directionType == AudioManager.GET_DEVICES_ALL ||
                     (
                             directionType == AudioManager.GET_DEVICES_OUTPUTS && info.isSink()
                             && info.getType() == AudioDeviceInfo.TYPE_USB_DEVICE
