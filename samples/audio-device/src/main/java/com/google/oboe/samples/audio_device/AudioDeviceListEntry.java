@@ -20,18 +20,20 @@ import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
  * POJO which represents basic information for an audio device.
- *
  * Example: id: 8, deviceName: "built-in speaker"
  */
 public class AudioDeviceListEntry {
 
-    private int mId;
-    private String mName;
+    final private int mId;
+    final private String mName;
 
     public AudioDeviceListEntry(int deviceId, String deviceName){
         mId = deviceId;
@@ -46,6 +48,7 @@ public class AudioDeviceListEntry {
         return mName;
     }
 
+    @NonNull
     public String toString(){
         return getName();
     }
@@ -58,7 +61,7 @@ public class AudioDeviceListEntry {
         AudioDeviceListEntry that = (AudioDeviceListEntry) o;
 
         if (mId != that.mId) return false;
-        return mName != null ? mName.equals(that.mName) : that.mName == null;
+        return Objects.equals(mName, that.mName);
     }
 
     @Override

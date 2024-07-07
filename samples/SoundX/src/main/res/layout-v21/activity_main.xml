@@ -58,7 +58,7 @@
         android:layout_marginStart="47dp"
         android:layout_marginEnd="47dp"
         android:layout_marginBottom="32dp"
-        android:text="IA Predictions"
+        android:text="@string/ia_predictions"
         app:layout_constraintBottom_toTopOf="@+id/button_toggle_effect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -80,7 +80,7 @@
         android:layout_marginTop="39dp"
         android:layout_marginEnd="23dp"
         android:layout_marginBottom="19dp"
-        android:text="Le pouvoir de l'inclusivité.\nDans votre poche."
+        android:text="@string/le_pouvoir_de_l_inclusivit_ndans_votre_poche"
         android:textAlignment="center"
         android:textColor="#FEFEFE"
         android:textSize="26sp"
@@ -91,6 +91,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck"
         tools:visibility="visible" />
 
     <TextView
@@ -100,7 +101,7 @@
         android:layout_marginStart="22dp"
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="28dp"
-        android:text="Activez la première IA qui traduit en temps réel le son en vibrations. Fait pour et par la communauté sourde."
+        android:text="@string/activez_la_premi_re_ia_qui_traduit_en_temps_r_el_le_son_en_vibrations_fait_pour_et_par_la_communaut_sourde"
         android:textAlignment="textStart"
         android:textColor="#FEFEFE"
         android:textSize="12sp"
@@ -108,7 +109,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="TextSizeCheck" />
 
     <include
         layout="@layout/devices"

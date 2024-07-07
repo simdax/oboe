@@ -73,10 +73,10 @@ Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env, jobject
                                                             jobject View) {
     if (engine == nullptr) {
         engine = new LiveEffectEngine();
+        env->GetJavaVM(&vm);
+        Text = env->NewGlobalRef(obj);
+        engine->mFullDuplexPass.callback->on_settings_update = Update;
     }
-    env->GetJavaVM(&vm);
-    Text = env->NewGlobalRef(obj);
-    engine->mFullDuplexPass.callback->on_settings_update = Update;
 }
 
 JNIEXPORT jboolean JNICALL
@@ -96,6 +96,7 @@ JNIEXPORT void JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env, jclass) {
     if (engine) {
         engine->setEffectOn(false);
+        engine->mFullDuplexPass.callback->on_settings_update = nullptr;
         delete engine;
         engine = nullptr;
     }

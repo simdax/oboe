@@ -23,8 +23,6 @@ import android.os.Vibrator;
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 
-import java.util.Arrays;
-
 public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -38,6 +36,7 @@ public class MainActivity extends FragmentActivity
     }
     private TextView Presets;
 
+    private Password Password;
     private PresetVibrations PresetVibrations;
     private CustomizeIA CustomizeIA;
 
@@ -50,7 +49,7 @@ public class MainActivity extends FragmentActivity
     private boolean isPlaying = false;
 
     private int apiSelection = OBOE_API_AAUDIO;
-    private boolean mAAudioRecommended = true;
+    private final boolean mAAudioRecommended = true;
 
     void Set(CharSequence str, double[] gains)
     {
@@ -70,6 +69,7 @@ public class MainActivity extends FragmentActivity
         Presets = findViewById(R.id.presets);
         statusText = findViewById(R.id.status_view_text);
 
+        Password = new Password();
         //PresetVibrations = new PresetVibrations();
         //Button vibrationPresetsButton = findViewById(R.id.VibrationPresetsButton);
         //vibrationPresetsButton.setOnClickListener(v -> PresetVibrations.show(getSupportFragmentManager(), "Vibrations"));
@@ -142,12 +142,6 @@ public class MainActivity extends FragmentActivity
         setSpinnersEnabled(enable);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    }
-
     private void VibrateFor(long Time) {
         Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -156,6 +150,19 @@ public class MainActivity extends FragmentActivity
             //deprecated in API 26
             v.vibrate(Time);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    }
+
+    @Override
+    protected void onStop() {
+        stopEffect();
+        LiveEffectEngine.delete();
+        super.onStop();
     }
 
     protected void onResume() {
@@ -167,13 +174,6 @@ public class MainActivity extends FragmentActivity
         //PresetVibrations.setPresets(LiveEffectEngine.GetPresets());
     }
 
-    @Override
-    protected void onPause() {
-        //stopEffect();
-        //LiveEffectEngine.delete();
-        super.onPause();
-    }
-
     public void toggleEffect() {
         if (isPlaying) {
             stopEffect();
@@ -183,14 +183,28 @@ public class MainActivity extends FragmentActivity
         }
     }
 
+
     private void startEffect() {
         Log.d(TAG, "Attempting to start");
 
-        if (!isRecordPermissionGranted()){
+        if (!isRecordPermissionGranted()) {
             requestRecordPermission();
             return;
         }
+        com.google.oboe.samples.liveEffect.Password.OK = () -> {
+            Play();
+            return null;
+        };
+        if (Password.input != null
+                && Password.input.getText().toString().equals("A")) {
+            Play();
+        } else {
+            Password.show(getSupportFragmentManager(), "Password");
+        }
+    }
 
+    private void Play()
+    {
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
             statusText.setText(R.string.status_playing);
