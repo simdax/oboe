@@ -41,8 +41,8 @@ public class MainActivity extends FragmentActivity
     private TextView Presets;
 
     private Password Password;
-    private PresetVibrations PresetVibrations;
-    private CustomizeIA CustomizeIA;
+    //private PresetVibrations PresetVibrations;
+    //private CustomizeIA CustomizeIA;
 
     native void create(TextView view);
 
@@ -53,9 +53,8 @@ public class MainActivity extends FragmentActivity
     private boolean isPlaying = false;
 
     private int apiSelection = OBOE_API_AAUDIO;
-    private final boolean mAAudioRecommended = true;
 
-    void Set(CharSequence str, double[] gains)
+    void Set(CharSequence str, double[] ignored_gains)
     {
         Presets.setText(str);
         // int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
@@ -130,6 +129,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void EnableAudioApiUI(boolean enable) {
+        boolean mAAudioRecommended = true;
         if(apiSelection == OBOE_API_AAUDIO && !mAAudioRecommended)
         {
             apiSelection = OBOE_API_OPENSL_ES;
@@ -146,18 +146,17 @@ public class MainActivity extends FragmentActivity
         setSpinnersEnabled(enable);
     }
 
-    private void VibrateFor(long Time) {
-        Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(Time, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            //deprecated in API 26
-            v.vibrate(Time);
-        }
-    }
+    //private void VibrateFor(long Time) {
+    //    Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    //        v.vibrate(VibrationEffect.createOneShot(Time, VibrationEffect.DEFAULT_AMPLITUDE));
+    //    } else {
+    //        //deprecated in API 26
+    //        v.vibrate(Time);
+    //    }
+    //}
 
-    class Bob implements AudioManager.OnAudioFocusChangeListener {
-
+    static class Bob implements AudioManager.OnAudioFocusChangeListener {
         @Override
         public void onAudioFocusChange(int focusChange) {
                 switch (focusChange) {
@@ -197,10 +196,10 @@ public class MainActivity extends FragmentActivity
     protected void onStart() {
         super.onStart();
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
-//                .setUsage(AudioAttributes.USAGE_MEDIA)
+//        AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
+//               .setUsage(AudioAttributes.USAGE_MEDIA)
 //                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                .build();
+//                .build();
         AudioFocusRequest mFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
 //                .setAudioAttributes(mPlaybackAttributes)
 //                .setAcceptsDelayedFocusGain(true)
