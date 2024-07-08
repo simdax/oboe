@@ -49,7 +49,7 @@ public class AudioDeviceAdapter extends ArrayAdapter<AudioDeviceListEntry> {
 
         TextView deviceName = rowView.findViewById(R.id.device_name);
         AudioDeviceListEntry deviceInfo = getItem(position);
-        if (deviceInfo != null)
+        if (deviceInfo != null && deviceInfo.getName() != null)
         {
             deviceName.setText(deviceInfo.getName());
         }

@@ -27,7 +27,7 @@ public class Password extends DialogFragment {
                 .setView(input)
                 .setPositiveButton("Ok", (dialog, whichButton) -> {
                     Editable value = input.getText();
-                    if (value.toString().equals("a")) {
+                    if (value.toString().equals("A")) {
                         try {
                             Password.OK.call();
                         } catch (Exception e) {

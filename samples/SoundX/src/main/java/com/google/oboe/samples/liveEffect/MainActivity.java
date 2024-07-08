@@ -1,11 +1,15 @@
 package com.google.oboe.samples.liveEffect;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -54,11 +58,11 @@ public class MainActivity extends FragmentActivity
     void Set(CharSequence str, double[] gains)
     {
         Presets.setText(str);
-       // int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
-       // if (i != -1 && PresetVibrations.CheckItems[i])
-       // {
-       //     VibrateFor(300);
-       // }
+        // int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
+        // if (i != -1 && PresetVibrations.CheckItems[i])
+        // {
+        //     VibrateFor(300);
+        // }
     }
 
     @Override
@@ -138,7 +142,7 @@ public class MainActivity extends FragmentActivity
         }
 
         ((RadioGroup)findViewById(R.id.apiSelectionGroup))
-          .check(apiSelection == OBOE_API_AAUDIO ? R.id.aaudioButton : R.id.slesButton);
+                .check(apiSelection == OBOE_API_AAUDIO ? R.id.aaudioButton : R.id.slesButton);
         setSpinnersEnabled(enable);
     }
 
@@ -152,19 +156,74 @@ public class MainActivity extends FragmentActivity
         }
     }
 
+    class Bob implements AudioManager.OnAudioFocusChangeListener {
+
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+                switch (focusChange) {
+                    case AudioManager.AUDIOFOCUS_GAIN:
+//                                if (mPlaybackDelayed || mResumeOnFocusGain) {
+//                                    synchronized (mFocusLock) {
+//                                        mPlaybackDelayed = false;
+//                                        mResumeOnFocusGain = false;
+//                                    }
+//                                    playbackNow();
+//                                }
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS:
+                        //synchronized (mFocusLock) {
+                        //    // this is not a transient loss, we shouldn't automatically resume for now
+                        //    mResumeOnFocusGain = false;
+                        //    mPlaybackDelayed = false;
+                        //}
+                        //pausePlayback();
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                        // we handle all transient losses the same way because we never duck audio books
+                        //synchronized (mFocusLock) {
+                        //    // we should only resume if playback was interrupted
+                        //    mResumeOnFocusGain = mMediaPlayer.isPlaying();
+                        //    mPlaybackDelayed = false;
+                        //}
+                        //pausePlayback();
+                        break;
+                }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onStart() {
         super.onStart();
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
+//                .setUsage(AudioAttributes.USAGE_MEDIA)
+//                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .build();
+        AudioFocusRequest mFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+//                .setAudioAttributes(mPlaybackAttributes)
+//                .setAcceptsDelayedFocusGain(true)
+//                .setWillPauseWhenDucked(true)
+                .setOnAudioFocusChangeListener(new Bob())
+                .build();
+        mAudioManager.requestAudioFocus(mFocusRequest);
+        //setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     @Override
     protected void onStop() {
-        stopEffect();
-        LiveEffectEngine.delete();
+        //stopEffect();
+        //LiveEffectEngine.delete();
         super.onStop();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         create(findViewById(R.id.presets));
@@ -277,8 +336,8 @@ public class MainActivity extends FragmentActivity
             // Show a toast and update the status accordingly
             statusText.setText(R.string.status_record_audio_denied);
             Toast.makeText(getApplicationContext(),
-                    getString(R.string.need_record_audio_permission),
-                    Toast.LENGTH_SHORT)
+                            getString(R.string.need_record_audio_permission),
+                            Toast.LENGTH_SHORT)
                     .show();
         } else {
             // Permission was granted, start live effect
