@@ -3,7 +3,6 @@ package com.google.oboe.samples.liveEffect;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
@@ -13,7 +12,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +20,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Vibrator;
 
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
