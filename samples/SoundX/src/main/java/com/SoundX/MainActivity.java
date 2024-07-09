@@ -3,6 +3,7 @@ package com.SoundX;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
@@ -133,9 +134,6 @@ public class MainActivity extends FragmentActivity
 
     private void EnableAudioApiUI(boolean enable) {
         boolean mAAudioRecommended = true;
-        if (apiSelection == OBOE_API_AAUDIO && !mAAudioRecommended) {
-            apiSelection = OBOE_API_OPENSL_ES;
-        }
         findViewById(R.id.slesButton).setEnabled(enable);
         if (!mAAudioRecommended) {
             findViewById(R.id.aaudioButton).setEnabled(false);
@@ -158,36 +156,21 @@ public class MainActivity extends FragmentActivity
     //    }
     //}
 
-    static class Bob implements AudioManager.OnAudioFocusChangeListener {
+    class Focus implements AudioManager.OnAudioFocusChangeListener {
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
                 case AudioManager.AUDIOFOCUS_GAIN:
-//                                if (mPlaybackDelayed || mResumeOnFocusGain) {
-//                                    synchronized (mFocusLock) {
-//                                        mPlaybackDelayed = false;
-//                                        mResumeOnFocusGain = false;
-//                                    }
-//                                    playbackNow();
-//                                }
+                    //Toast.makeText(MainActivity.this, "Focus GAINED", Toast.LENGTH_LONG).show();
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    //synchronized (mFocusLock) {
-                    //    // this is not a transient loss, we shouldn't automatically resume for now
-                    //    mResumeOnFocusGain = false;
-                    //    mPlaybackDelayed = false;
-                    //}
-                    //pausePlayback();
+                    //Toast.makeText(MainActivity.this, "Focus LOST", Toast.LENGTH_LONG).show();
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    //Toast.makeText(MainActivity.this, "Focus LOST TRANSIENT", Toast.LENGTH_LONG).show();
+                    break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    // we handle all transient losses the same way because we never duck audio books
-                    //synchronized (mFocusLock) {
-                    //    // we should only resume if playback was interrupted
-                    //    mResumeOnFocusGain = mMediaPlayer.isPlaying();
-                    //    mPlaybackDelayed = false;
-                    //}
-                    //pausePlayback();
+                    //Toast.makeText(MainActivity.this, "Focus LOST TRANSIENT CAN DUCK", Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -198,30 +181,31 @@ public class MainActivity extends FragmentActivity
     protected void onStart() {
         super.onStart();
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-//        AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
-//               .setUsage(AudioAttributes.USAGE_MEDIA)
-//                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-//                .build();
+        AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .build();
         AudioFocusRequest mFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
 //                .setAudioAttributes(mPlaybackAttributes)
-//                .setAcceptsDelayedFocusGain(true)
+                .setAcceptsDelayedFocusGain(true)
 //                .setWillPauseWhenDucked(true)
-                .setOnAudioFocusChangeListener(new Bob())
+                .setOnAudioFocusChangeListener(new Focus())
                 .build();
-        mAudioManager.requestAudioFocus(mFocusRequest);
+        int res = mAudioManager.requestAudioFocus(mFocusRequest);
+        //Toast.makeText(this, "", Toast.LENGTH_LONG).show();
         //setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     @Override
     protected void onStop() {
         //stopEffect();
-        //LiveEffectEngine.delete();
         super.onStop();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        LiveEffectEngine.delete();
     }
 
     @Override

@@ -12,14 +12,14 @@ public class PresetVibrations extends DialogFragment {
     public boolean[] CheckItems = null;
     public CharSequence[] Presets = null;
 
-    public void setPresets(String[] P)
-    {
-        Presets = P;
-        if (CheckItems == null)
-        {
-            CheckItems = new boolean[Presets.length];
-        }
-    }
+   // public void setPresets(String[] P)
+   // {
+   //     Presets = P;
+   //     if (CheckItems == null)
+   //     {
+   //         CheckItems = new boolean[Presets.length];
+   //     }
+   // }
 
     @NonNull
     @Override
@@ -31,12 +31,8 @@ public class PresetVibrations extends DialogFragment {
                 .setPositiveButton("OK", (dialog, which) -> {
                 })
                 .setMultiChoiceItems(Presets, CheckItems,
-                        new DialogInterface.OnMultiChoiceClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which,
-                                                boolean isChecked) {
-                            }
-                });
+                        (dialog, which, isChecked) -> {
+                        });
         return builder.create();
     }
 }

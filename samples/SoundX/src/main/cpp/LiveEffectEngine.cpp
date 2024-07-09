@@ -79,6 +79,7 @@ oboe::Result  LiveEffectEngine::openStreams() {
 
     LOGE("opening input stream. sampleRate %d", mSampleRate);
     setupRecordingStreamParameters(&inBuilder, mSampleRate);
+//    inBuilder.setBufferCapacityInFrames(mPlayStream->getBufferCapacityInFrames() * 2);
     result = inBuilder.openStream(mRecordingStream);
     if (result != oboe::Result::OK) {
         LOGE("Failed to open input stream. Error %s", oboe::convertToText(result));
@@ -105,6 +106,9 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupRecordingStreamParameters(
     // This sample uses blocking read() because we don't specify a callback
     builder->setDeviceId(mRecordingDeviceId)
             ->setDirection(oboe::Direction::Input)
+            ->setInputPreset(oboe::VoicePerformance)
+            ->setUsage(oboe::Usage::Game)
+            ->setAllowedCapturePolicy(oboe::AllowedCapturePolicy::None)
             ->setChannelCount(mInputChannelCount);
     return setupCommonStreamParameters(builder);
 }
@@ -120,7 +124,9 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupPlaybackStreamParameters(
     builder->setDataCallback(this)
             ->setErrorCallback(this)
             ->setDeviceId(mPlaybackDeviceId)
+            ->setUsage(oboe::Usage::Media)
             ->setDirection(oboe::Direction::Output)
+            ->setPrivacySensitiveMode(oboe::PrivacySensitiveMode::Enabled)
             ->setChannelCount(mOutputChannelCount);
 
     return setupCommonStreamParameters(builder);
@@ -178,6 +184,12 @@ void LiveEffectEngine::warnIfNotLowLatency(std::shared_ptr<oboe::AudioStream> &s
                 "Stream is NOT low latency."
                 "Check your requested format, sample rate and channel count");
     }
+    if (stream->getSharingMode() != oboe::SharingMode::Exclusive) {
+        LOGW(
+                "Stream is NOT Exclusive."
+                );
+    }
+
 }
 
 /**

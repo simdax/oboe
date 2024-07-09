@@ -75,8 +75,8 @@ Java_com_SoundX_MainActivity_create(JNIEnv *env, jobject obj,
         engine = new LiveEffectEngine();
         env->GetJavaVM(&vm);
         Text = env->NewGlobalRef(obj);
-        engine->mFullDuplexPass.callback->on_settings_update = Update;
     }
+    engine->mFullDuplexPass.callback->on_settings_update = Update;
 }
 
 JNIEXPORT jboolean JNICALL
@@ -95,10 +95,10 @@ Java_com_SoundX_LiveEffectEngine_Ai(JNIEnv *env,
 JNIEXPORT void JNICALL
 Java_com_SoundX_LiveEffectEngine_delete(JNIEnv *env, jclass) {
     if (engine) {
-        engine->setEffectOn(false);
+        //engine->setEffectOn(false);
         engine->mFullDuplexPass.callback->on_settings_update = nullptr;
-        delete engine;
-        engine = nullptr;
+        //delete engine;
+        //engine = nullptr;
     }
 }
 
