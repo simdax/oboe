@@ -39,8 +39,8 @@ void Update(
                 presetSettings_gain_L_5, presetSettings_gain_R_5,
         };
 
-        ss << "Preset: " << presets << std::endl
-           << "Preset Mean: " << meansData << std::endl;
+        ss << "" << presets << std::endl
+           << "" << meansData << std::endl;
         jdoubleArray gains = e->NewDoubleArray(12);
         e->SetDoubleArrayRegion(gains, 0, 12, &cpp_gains[0]);
         e->CallVoidMethod(Text,

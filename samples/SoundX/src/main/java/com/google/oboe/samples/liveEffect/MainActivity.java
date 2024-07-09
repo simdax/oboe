@@ -7,6 +7,7 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -27,14 +28,17 @@ import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
+    public static String Pass = "JO2024";
+
     private static final String TAG = MainActivity.class.getName();
     private static final int AUDIO_EFFECT_REQUEST = 0;
     private static final int OBOE_API_AAUDIO = 0;
-    private static final int OBOE_API_OPENSL_ES=1;
+    private static final int OBOE_API_OPENSL_ES = 1;
 
     static {
         System.loadLibrary("liveEffect");
     }
+
     private TextView Presets;
 
     private Password Password;
@@ -51,8 +55,7 @@ public class MainActivity extends FragmentActivity
 
     private int apiSelection = OBOE_API_AAUDIO;
 
-    void Set(CharSequence str, double[] ignored_gains)
-    {
+    void Set(CharSequence str, double[] ignored_gains) {
         Presets.setText(str);
         // int i = Arrays.asList(PresetVibrations.Presets).indexOf(str);
         // if (i != -1 && PresetVibrations.CheckItems[i])
@@ -89,6 +92,7 @@ public class MainActivity extends FragmentActivity
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     LiveEffectEngine.setRecordingDeviceId(getRecordingDeviceId());
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // Do nothing
@@ -103,21 +107,22 @@ public class MainActivity extends FragmentActivity
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     LiveEffectEngine.setPlaybackDeviceId(getPlaybackDeviceId());
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
                     // Do nothing
                 }
             });
         }
-        ((RadioGroup)findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
+        ((RadioGroup) findViewById(R.id.apiSelectionGroup)).check(R.id.aaudioButton);
         findViewById(R.id.aaudioButton).setOnClickListener(v -> {
-            if (((RadioButton)v).isChecked()) {
+            if (((RadioButton) v).isChecked()) {
                 apiSelection = OBOE_API_AAUDIO;
                 setSpinnersEnabled(true);
             }
         });
         findViewById(R.id.slesButton).setOnClickListener(v -> {
-            if (((RadioButton)v).isChecked()) {
+            if (((RadioButton) v).isChecked()) {
                 apiSelection = OBOE_API_OPENSL_ES;
                 setSpinnersEnabled(false);
             }
@@ -127,18 +132,17 @@ public class MainActivity extends FragmentActivity
 
     private void EnableAudioApiUI(boolean enable) {
         boolean mAAudioRecommended = true;
-        if(apiSelection == OBOE_API_AAUDIO && !mAAudioRecommended)
-        {
+        if (apiSelection == OBOE_API_AAUDIO && !mAAudioRecommended) {
             apiSelection = OBOE_API_OPENSL_ES;
         }
         findViewById(R.id.slesButton).setEnabled(enable);
-        if(!mAAudioRecommended) {
+        if (!mAAudioRecommended) {
             findViewById(R.id.aaudioButton).setEnabled(false);
         } else {
             findViewById(R.id.aaudioButton).setEnabled(enable);
         }
 
-        ((RadioGroup)findViewById(R.id.apiSelectionGroup))
+        ((RadioGroup) findViewById(R.id.apiSelectionGroup))
                 .check(apiSelection == OBOE_API_AAUDIO ? R.id.aaudioButton : R.id.slesButton);
         setSpinnersEnabled(enable);
     }
@@ -156,8 +160,8 @@ public class MainActivity extends FragmentActivity
     static class Bob implements AudioManager.OnAudioFocusChangeListener {
         @Override
         public void onAudioFocusChange(int focusChange) {
-                switch (focusChange) {
-                    case AudioManager.AUDIOFOCUS_GAIN:
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_GAIN:
 //                                if (mPlaybackDelayed || mResumeOnFocusGain) {
 //                                    synchronized (mFocusLock) {
 //                                        mPlaybackDelayed = false;
@@ -165,26 +169,26 @@ public class MainActivity extends FragmentActivity
 //                                    }
 //                                    playbackNow();
 //                                }
-                        break;
-                    case AudioManager.AUDIOFOCUS_LOSS:
-                        //synchronized (mFocusLock) {
-                        //    // this is not a transient loss, we shouldn't automatically resume for now
-                        //    mResumeOnFocusGain = false;
-                        //    mPlaybackDelayed = false;
-                        //}
-                        //pausePlayback();
-                        break;
-                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                        // we handle all transient losses the same way because we never duck audio books
-                        //synchronized (mFocusLock) {
-                        //    // we should only resume if playback was interrupted
-                        //    mResumeOnFocusGain = mMediaPlayer.isPlaying();
-                        //    mPlaybackDelayed = false;
-                        //}
-                        //pausePlayback();
-                        break;
-                }
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    //synchronized (mFocusLock) {
+                    //    // this is not a transient loss, we shouldn't automatically resume for now
+                    //    mResumeOnFocusGain = false;
+                    //    mPlaybackDelayed = false;
+                    //}
+                    //pausePlayback();
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    // we handle all transient losses the same way because we never duck audio books
+                    //synchronized (mFocusLock) {
+                    //    // we should only resume if playback was interrupted
+                    //    mResumeOnFocusGain = mMediaPlayer.isPlaying();
+                    //    mPlaybackDelayed = false;
+                    //}
+                    //pausePlayback();
+                    break;
+            }
         }
     }
 
@@ -251,15 +255,14 @@ public class MainActivity extends FragmentActivity
             return null;
         };
         if (Password.input != null
-                && Password.input.getText().toString().equals("A")) {
+                && Password.input.getText().toString().equals(Pass)) {
             Play();
         } else {
             Password.show(getSupportFragmentManager(), "Password");
         }
     }
 
-    private void Play()
-    {
+    private void Play() {
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
             statusText.setText(R.string.status_playing);
@@ -281,9 +284,8 @@ public class MainActivity extends FragmentActivity
         EnableAudioApiUI(true);
     }
 
-    private void setSpinnersEnabled(boolean isEnabled){
-        if (((RadioButton)findViewById(R.id.slesButton)).isChecked())
-        {
+    private void setSpinnersEnabled(boolean isEnabled) {
+        if (((RadioButton) findViewById(R.id.slesButton)).isChecked()) {
             isEnabled = false;
             playbackDeviceSpinner.setSelection(0);
             recordingDeviceSpinner.setSelection(0);
@@ -292,12 +294,12 @@ public class MainActivity extends FragmentActivity
         playbackDeviceSpinner.setEnabled(isEnabled);
     }
 
-    private int getRecordingDeviceId(){
-        return ((AudioDeviceListEntry)recordingDeviceSpinner.getSelectedItem()).getId();
+    private int getRecordingDeviceId() {
+        return ((AudioDeviceListEntry) recordingDeviceSpinner.getSelectedItem()).getId();
     }
 
-    private int getPlaybackDeviceId(){
-        return ((AudioDeviceListEntry)playbackDeviceSpinner.getSelectedItem()).getId();
+    private int getPlaybackDeviceId() {
+        return ((AudioDeviceListEntry) playbackDeviceSpinner.getSelectedItem()).getId();
     }
 
     private boolean isRecordPermissionGranted() {
@@ -305,7 +307,7 @@ public class MainActivity extends FragmentActivity
                 PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestRecordPermission(){
+    private void requestRecordPermission() {
         ActivityCompat.requestPermissions(
                 this,
                 new String[]{Manifest.permission.RECORD_AUDIO},

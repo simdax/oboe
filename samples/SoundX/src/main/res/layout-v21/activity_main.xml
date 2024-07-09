@@ -59,15 +59,11 @@
         android:layout_height="54dp"
         android:layout_marginStart="47dp"
         android:layout_marginEnd="47dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/ia_predictions"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_toggle_effect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:visibility="invisible" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -78,12 +74,11 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="331dp"
-        android:layout_height="133dp"
+        android:layout_width="338dp"
+        android:layout_height="121dp"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="256dp"
         android:layout_marginEnd="23dp"
-        android:layout_marginBottom="48dp"
         android:text="@string/le_pouvoir_de_l_inclusivit_ndans_votre_poche"
         android:textAlignment="center"
         android:textColor="#FEFEFE"
@@ -104,7 +99,6 @@
         android:layout_height="100dp"
         android:layout_marginStart="22dp"
         android:layout_marginEnd="22dp"
-        android:layout_marginBottom="28dp"
         android:text="@string/activez_la_premi_re_ia_qui_traduit_en_temps_r_el_le_son_en_vibrations_fait_pour_et_par_la_communaut_sourde"
         android:textAlignment="textStart"
         android:textColor="#919191"

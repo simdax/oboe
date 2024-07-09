@@ -19,7 +19,6 @@
     <string name="aaudio">AAudio</string>
     <string name="sles">OpenSL ES</string>
 
-    <string name="ia_predictions">IA Predictions</string>
     <string name="le_pouvoir_de_l_inclusivit_ndans_votre_poche">Le pouvoir de l\'inclusivité.\nDans votre poche.</string>
     <string name="activez_la_premi_re_ia_qui_traduit_en_temps_r_el_le_son_en_vibrations_fait_pour_et_par_la_communaut_sourde">Activez la première IA qui traduit en temps réel le son en vibrations. Fait pour et par la communauté sourde.</string>
 </resources>

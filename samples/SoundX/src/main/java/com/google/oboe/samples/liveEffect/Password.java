@@ -23,11 +23,11 @@ public class Password extends DialogFragment {
 
         input = new EditText(getContext());
         builder.setTitle("Play")
-                .setMessage("Enter password ('A')")
+                .setMessage("Enter password please:")
                 .setView(input)
                 .setPositiveButton("Ok", (dialog, whichButton) -> {
                     Editable value = input.getText();
-                    if (value.toString().equals("A")) {
+                    if (value.toString().equals(MainActivity.Pass)) {
                         try {
                             Password.OK.call();
                         } catch (Exception e) {
