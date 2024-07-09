@@ -1,4 +1,4 @@
-package com.google.oboe.samples.liveEffect;
+package com.SoundX;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

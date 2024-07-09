@@ -1,4 +1,4 @@
-package com.google.oboe.samples.liveEffect;
+package com.SoundX;
 
 import android.Manifest;
 import android.content.Context;
@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
+import com.google.oboe.samples.liveEffect.R;
 
 public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -250,7 +251,7 @@ public class MainActivity extends FragmentActivity
             requestRecordPermission();
             return;
         }
-        com.google.oboe.samples.liveEffect.Password.OK = () -> {
+        com.SoundX.Password.OK = () -> {
             Play();
             return null;
         };

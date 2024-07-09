@@ -55,7 +55,7 @@ void Update(
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setGain(JNIEnv *env, jclass, jint band_id,
+Java_com_SoundX_LiveEffectEngine_setGain(JNIEnv *env, jclass, jint band_id,
                                                                  jint L_or_R, jdouble newValue) {
     if (engine) {
         {
@@ -69,7 +69,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setGain(JNIEnv *env, jc
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env, jobject obj,
+Java_com_SoundX_MainActivity_create(JNIEnv *env, jobject obj,
                                                             jobject View) {
     if (engine == nullptr) {
         engine = new LiveEffectEngine();
@@ -80,7 +80,7 @@ Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env, jobject
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Ai(JNIEnv *env,
+Java_com_SoundX_LiveEffectEngine_Ai(JNIEnv *env,
                                                             jclass
 ) {
     if (engine) {
@@ -93,7 +93,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Ai(JNIEnv *env,
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env, jclass) {
+Java_com_SoundX_LiveEffectEngine_delete(JNIEnv *env, jclass) {
     if (engine) {
         engine->setEffectOn(false);
         engine->mFullDuplexPass.callback->on_settings_update = nullptr;
@@ -103,7 +103,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_delete(JNIEnv *env, jcl
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setEffectOn(
+Java_com_SoundX_LiveEffectEngine_setEffectOn(
         JNIEnv *env, jclass, jboolean isEffectOn) {
     if (engine == nullptr) {
         LOGE(
@@ -116,7 +116,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setEffectOn(
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(JNIEnv *env, jclass,
+Java_com_SoundX_LiveEffectEngine_setRecordingDeviceId(JNIEnv *env, jclass,
                                                                               jint deviceId) {
     if (engine == nullptr) {
         LOGE(
@@ -129,7 +129,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setRecordingDeviceId(JN
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(JNIEnv *env, jclass,
+Java_com_SoundX_LiveEffectEngine_setPlaybackDeviceId(JNIEnv *env, jclass,
                                                                              jint deviceId) {
     if (engine == nullptr) {
         LOGE(
@@ -142,7 +142,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setPlaybackDeviceId(JNI
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env, jclass type,
+Java_com_SoundX_LiveEffectEngine_setAPI(JNIEnv *env, jclass type,
                                                                 jint apiType) {
     if (engine == nullptr) {
         LOGE(
@@ -168,7 +168,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_setAPI(JNIEnv *env, jcl
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(JNIEnv *env, jclass type) {
+Java_com_SoundX_LiveEffectEngine_isAAudioRecommended(JNIEnv *env, jclass type) {
     if (engine == nullptr) {
         LOGE(
                 "Engine is null, you must call createEngine "
@@ -179,7 +179,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_isAAudioRecommended(JNI
 }
 
 JNIEXPORT void JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_native_1setDefaultStreamValues(JNIEnv *env,
+Java_com_SoundX_LiveEffectEngine_native_1setDefaultStreamValues(JNIEnv *env,
                                                                                         jclass type,
                                                                                         jint sampleRate,
                                                                                         jint framesPerBurst) {
@@ -188,7 +188,7 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_native_1setDefaultStrea
 }
 
 JNIEXPORT jobjectArray JNICALL
-Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_GetPresets(JNIEnv *env, jclass clazz) {
+Java_com_SoundX_LiveEffectEngine_GetPresets(JNIEnv *env, jclass clazz) {
     auto cppPresets = engine->mFullDuplexPass.callback->settings.Presets;
     jobjectArray Presets = env->NewObjectArray(cppPresets.size(), env->FindClass("java/lang/String"), {}) ;
     int i = 0;

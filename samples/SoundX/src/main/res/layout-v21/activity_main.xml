@@ -21,7 +21,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     android:backgroundTint="#000000"
-    tools:context="com.google.oboe.samples.liveEffect.MainActivity"
+    tools:context="com.SoundX.MainActivity"
     tools:layout_editor_absoluteX="-9dp"
     tools:layout_editor_absoluteY="0dp">
 

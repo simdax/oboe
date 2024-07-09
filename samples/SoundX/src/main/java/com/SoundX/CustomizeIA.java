@@ -1,4 +1,4 @@
-package com.google.oboe.samples.liveEffect;
+package com.SoundX;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,7 +10,7 @@ import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.Objects;
+import com.google.oboe.samples.liveEffect.R;
 
 public class CustomizeIA extends DialogFragment {
     private SeekBar Voice;

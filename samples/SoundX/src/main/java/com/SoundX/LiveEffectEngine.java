@@ -1,4 +1,4 @@
-package com.google.oboe.samples.liveEffect;
+package com.SoundX;
 
 import android.content.Context;
 import android.media.AudioManager;
