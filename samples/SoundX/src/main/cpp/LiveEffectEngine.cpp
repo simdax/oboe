@@ -79,7 +79,7 @@ oboe::Result  LiveEffectEngine::openStreams() {
 
     LOGE("opening input stream. sampleRate %d", mSampleRate);
     setupRecordingStreamParameters(&inBuilder, mSampleRate);
-//    inBuilder.setBufferCapacityInFrames(mPlayStream->getBufferCapacityInFrames() * 2);
+    //inBuilder.setBufferCapacityInFrames(mPlayStream->getBufferCapacityInFrames() * 2);
     result = inBuilder.openStream(mRecordingStream);
     if (result != oboe::Result::OK) {
         LOGE("Failed to open input stream. Error %s", oboe::convertToText(result));
@@ -105,10 +105,11 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupRecordingStreamParameters(
         oboe::AudioStreamBuilder *builder, int32_t sampleRate) {
     // This sample uses blocking read() because we don't specify a callback
     builder->setDeviceId(mRecordingDeviceId)
+//            ->setInputPreset(oboe::VoicePerformance)
+//            ->setUsage(oboe::Usage::Game)
+//            ->setAllowedCapturePolicy(oboe::AllowedCapturePolicy::None)
             ->setDirection(oboe::Direction::Input)
-            ->setInputPreset(oboe::VoicePerformance)
-            ->setUsage(oboe::Usage::Game)
-            ->setAllowedCapturePolicy(oboe::AllowedCapturePolicy::None)
+            ->setFormatConversionAllowed(true)
             ->setChannelCount(mInputChannelCount);
     return setupCommonStreamParameters(builder);
 }
@@ -122,11 +123,11 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupRecordingStreamParameters(
 oboe::AudioStreamBuilder *LiveEffectEngine::setupPlaybackStreamParameters(
         oboe::AudioStreamBuilder *builder) {
     builder->setDataCallback(this)
+//            ->setUsage(oboe::Usage::Media)
+//            ->setPrivacySensitiveMode(oboe::PrivacySensitiveMode::Enabled)
             ->setErrorCallback(this)
             ->setDeviceId(mPlaybackDeviceId)
-            ->setUsage(oboe::Usage::Media)
             ->setDirection(oboe::Direction::Output)
-            ->setPrivacySensitiveMode(oboe::PrivacySensitiveMode::Enabled)
             ->setChannelCount(mOutputChannelCount);
 
     return setupCommonStreamParameters(builder);
@@ -144,7 +145,7 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupCommonStreamParameters(
     // If EXCLUSIVE mode isn't available the builder will fall back to SHARED
     // mode.
     builder->setAudioApi(mAudioApi)
-            ->setFormat(mFormat)
+            //->setFormat(mFormat)
             ->setSharingMode(oboe::SharingMode::Exclusive)
             ->setPerformanceMode(oboe::PerformanceMode::LowLatency);
     return builder;

@@ -29,7 +29,9 @@ public class Password extends DialogFragment {
                     Editable value = input.getText();
                     if (value.toString().equals(MainActivity.Pass)) {
                         try {
-                            Password.OK.call();
+                            if (Password.OK != null) {
+                                Password.OK.call();
+                            }
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

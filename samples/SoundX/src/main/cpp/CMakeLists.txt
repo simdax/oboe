@@ -40,10 +40,13 @@ target_include_directories(liveEffect
     PRIVATE
         ${SAMPLE_ROOT_DIR}/debug-utils
         ${OBOE_DIR}/include
-        "${HOME}/android/include"
+        "${HOME}/include"
+        "${HOME}/src/SimpleCompressor/src"
         "${HOME}/vendor/tensorflow"
+        "${HOME}/vendor/soundtouch/include"
         "${HOME}/vendor/flatbuffers/include"
         "${HOME}/vendor/stk/include"
+        "${HOME}/vendor/kfr/include"
 )
 target_compile_features(liveEffect PRIVATE cxx_std_17)
 target_link_libraries(liveEffect
@@ -54,10 +57,11 @@ target_link_libraries(liveEffect
         log
         soundx
         ${TFLITE_DIR}/libtensorflow-lite.a
+        ${TFLITE_DIR}/libxnnpack-delegate.a
         ${TFLITE_DIR}/pthreadpool/libpthreadpool.a
+        ${TFLITE_DIR}/_deps/xnnpack-build/libXNNPACK.a
         ${TFLITE_DIR}/_deps/farmhash-build/libfarmhash.a
         ${TFLITE_DIR}/_deps/cpuinfo-build/libcpuinfo.a
-        ${TFLITE_DIR}/_deps/xnnpack-build/libXNNPACK.a
         ${TFLITE_DIR}/_deps/fft2d-build/libfft2d_fftsg.a
         ${TFLITE_DIR}/_deps/fft2d-build/libfft2d_fftsg2d.a
         ${TFLITE_DIR}/_deps/flatbuffers-build/libflatbuffers.a

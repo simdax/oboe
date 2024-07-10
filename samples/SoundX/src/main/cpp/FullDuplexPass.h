@@ -21,8 +21,8 @@ public:
         callback->settings.fadeOn = false;
         callback->settings.peakFilter = false;
         callback->settings.samplerate = 48000;
-        callback->settings.master_gain_L = 15;
-        callback->settings.master_gain_R = 15;
+        callback->settings.master_gain_L = 10;
+        callback->settings.master_gain_R = 10;
         callback->Compressor->_prepare(48000, 1024);
         callback->Compressor->setAttackTime(0.000012);
         callback->Compressor->setReleaseTime(0.195);
@@ -42,7 +42,11 @@ public:
         const float *inputFloats = static_cast<const float *>(inputData);
         float *outputFloats = static_cast<float *>(outputData);
 
-        callback->tick(inputFloats, outputFloats, numInputFrames);
+        //LOGD("frames %d", numInputFrames);
+        if (numInputFrames > 0)
+        {
+            callback->tick(inputFloats, outputFloats, numInputFrames);
+        }
         return oboe::DataCallbackResult::Continue;
     }
 

@@ -1,10 +1,11 @@
 package com.SoundX;
 
 import android.Manifest;
+import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
-import android.media.AudioFocusRequest;
+import android.content.pm.ServiceInfo;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.util.Log;
@@ -156,7 +159,7 @@ public class MainActivity extends FragmentActivity
     //    }
     //}
 
-    class Focus implements AudioManager.OnAudioFocusChangeListener {
+    static class Focus implements AudioManager.OnAudioFocusChangeListener {
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
@@ -180,18 +183,19 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onStart() {
         super.onStart();
-        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                .build();
-        AudioFocusRequest mFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+
+        //AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        //AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
+        //        .setUsage(AudioAttributes.USAGE_MEDIA)
+        //        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+        //        .build();
+        //AudioFocusRequest mFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
 //                .setAudioAttributes(mPlaybackAttributes)
-                .setAcceptsDelayedFocusGain(true)
+//                .setAcceptsDelayedFocusGain(true)
 //                .setWillPauseWhenDucked(true)
-                .setOnAudioFocusChangeListener(new Focus())
-                .build();
-        int res = mAudioManager.requestAudioFocus(mFocusRequest);
+//                .setOnAudioFocusChangeListener(new Focus())
+//                .build();
+        //int res = mAudioManager.requestAudioFocus(mFocusRequest);
         //Toast.makeText(this, "", Toast.LENGTH_LONG).show();
         //setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
@@ -227,7 +231,6 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-
     private void startEffect() {
         Log.d(TAG, "Attempting to start");
 
@@ -248,6 +251,11 @@ public class MainActivity extends FragmentActivity
     }
 
     private void Play() {
+        Context context = getApplicationContext();
+        Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startService(intent);
+        }
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
             statusText.setText(R.string.status_playing);
