@@ -54,7 +54,7 @@ private:
 
     void closeStreams();
 
-    void closeStream(std::shared_ptr<oboe::AudioStream> &stream);
+    static void closeStream(std::shared_ptr<oboe::AudioStream> &stream);
 
     oboe::AudioStreamBuilder *setupCommonStreamParameters(
         oboe::AudioStreamBuilder *builder);
@@ -62,7 +62,7 @@ private:
         oboe::AudioStreamBuilder *builder, int32_t sampleRate);
     oboe::AudioStreamBuilder *setupPlaybackStreamParameters(
         oboe::AudioStreamBuilder *builder);
-    void warnIfNotLowLatency(std::shared_ptr<oboe::AudioStream> &stream);
+    static void warnIfNotLowLatency(std::shared_ptr<oboe::AudioStream> &stream);
 };
 
 extern LiveEffectEngine *engine;

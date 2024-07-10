@@ -145,7 +145,7 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupCommonStreamParameters(
     // If EXCLUSIVE mode isn't available the builder will fall back to SHARED
     // mode.
     builder->setAudioApi(mAudioApi)
-            //->setFormat(mFormat)
+            ->setFormat(mFormat)
             ->setSharingMode(oboe::SharingMode::Exclusive)
             ->setPerformanceMode(oboe::PerformanceMode::LowLatency);
     return builder;

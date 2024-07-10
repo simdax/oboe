@@ -1,11 +1,9 @@
 package com.SoundX;
 
 import android.Manifest;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,8 +11,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.ServiceCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.util.Log;
@@ -207,6 +203,20 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        StopService();
+    }
+
+    private void StopService() {
+        Context context = getApplicationContext();
+        Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.stopService(intent);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         LiveEffectEngine.delete();
@@ -225,6 +235,7 @@ public class MainActivity extends FragmentActivity
     public void toggleEffect() {
         if (isPlaying) {
             stopEffect();
+            StopService();
         } else {
             LiveEffectEngine.setAPI(apiSelection);
             startEffect();
@@ -248,6 +259,11 @@ public class MainActivity extends FragmentActivity
         } else {
             Password.show(getSupportFragmentManager(), "Password");
         }
+    }
+
+    private void PlayNew() {
+        //AudioRecord record = new AudioRecord(AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferBytes);
+        //AudioTrack track = new AudioTrack(AudioAttributes.createPlaybackConfig(), sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferBytes);
     }
 
     private void Play() {
