@@ -221,7 +221,7 @@ Java_com_SoundX_LiveEffectEngine_Debug(JNIEnv *env, jclass clazz, jint value) {
                 engine->mFullDuplexPass.callback->settings.Presets.find(
                         value == 1 ?
                         "MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER" :
-                        "MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER"
+                        "HUMAN-VOICE_SINGING_MALE_SINGING"
                 )->second
         );
     }

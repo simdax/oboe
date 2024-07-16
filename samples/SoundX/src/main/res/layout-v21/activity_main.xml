@@ -143,13 +143,13 @@
             android:id="@+id/presetOne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Preset 1" />
+            android:text="MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER" />
 
         <RadioButton
             android:id="@+id/presetTwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Preset 2" />
+            android:text="HUMAN-VOICE_SINGING_MALE_SINGING" />
 
         <RadioButton
             android:id="@+id/IA"
