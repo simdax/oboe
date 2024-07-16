@@ -17,6 +17,7 @@ public enum LiveEffectEngine {
     //static native boolean Ai();
     //static native String[] GetPresets();
     //static native boolean isAAudioRecommended();
+    static native void Debug(int Value);
     static native void setGain(int band_id, int L_or_R, double newValue);
     static native boolean setAPI(int apiType);
     static native boolean setEffectOn(boolean isEffectOn);

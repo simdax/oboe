@@ -26,6 +26,8 @@ import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
 import com.google.oboe.samples.liveEffect.R;
 
+import java.util.Map;
+
 public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -226,6 +228,20 @@ public class MainActivity extends FragmentActivity
     protected void onResume() {
         super.onResume();
         create(findViewById(R.id.presets));
+        Map<Integer, Integer> Debug = Map.of(
+                R.id.noProcess, 0,
+                R.id.Compressor, 1,
+                R.id.presetOne, 2,
+                R.id.presetTwo, 3,
+                R.id.IA, 4
+        );
+        for (Map.Entry<Integer, Integer> e: Debug.entrySet())
+        {
+            findViewById(e.getKey()).setOnClickListener(v -> {
+                LiveEffectEngine.Debug(e.getValue());
+            });
+        }
+
         //mAAudioRecommended = LiveEffectEngine.isAAudioRecommended();
         //EnableAudioApiUI(true);
         //LiveEffectEngine.setAPI(apiSelection);

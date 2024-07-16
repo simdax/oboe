@@ -31,6 +31,24 @@ public:
         callback->Compressor->setThreshold(-6.3);
         callback->Compressor->setMakeUpGain(5);
         callback->setPresetMode(0);
+
+        //const auto& Settings = *callback->settings.Presets.find("Default");
+        //callback->UpdateSettings(Settings.second);
+        setDefault();
+    }
+
+    void setDefault()
+    {
+        PresetSettings Nul;
+
+        Nul.fc_low_1 = { 0,0,0,0,0,0 };
+        Nul.fc_high_1 = { 20000, 20000, 20000, 20000, 20000, 20000 };
+        Nul.fc_low_2 = { 0,0,0,0,0,0 };
+        Nul.fc_high_2 = { 20000, 20000, 20000, 20000, 20000, 20000 };
+        Nul.pitch = { 0, 0, 0, 0, 0, 0 };
+        Nul.gain_L = { 0, 0, 0, 0, 0, 0 };
+        Nul.gain_R = { 0, 0, 0, 0, 0, 0 };
+        callback->UpdateSettings(Nul);
     }
 
     virtual oboe::DataCallbackResult

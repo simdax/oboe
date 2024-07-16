@@ -73,6 +73,7 @@ Java_com_SoundX_MainActivity_create(JNIEnv *env, jobject obj,
                                                             jobject View) {
     if (engine == nullptr) {
         engine = new LiveEffectEngine();
+
         env->GetJavaVM(&vm);
         Text = env->NewGlobalRef(obj);
     }
@@ -204,4 +205,25 @@ Java_com_SoundX_LiveEffectEngine_GetPresets(JNIEnv *env, jclass clazz) {
     return Presets;
 }
 
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_SoundX_LiveEffectEngine_Debug(JNIEnv *env, jclass clazz, jint value) {
+    if (!engine){
+        return;
+    }
+    engine->mFullDuplexPass.callback->CompressorOn = value != 0;
+    if (value == 0) {
+        engine->mFullDuplexPass.setDefault();
+    } else
+    {
+        engine->mFullDuplexPass.callback->UpdateSettings(
+                engine->mFullDuplexPass.callback->settings.Presets.find(
+                        value == 1 ?
+                        "MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER" :
+                        "MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER"
+                )->second
+        );
+    }
+    engine->mFullDuplexPass.callback->settings.ai = value == 4;
 }
