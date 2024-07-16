@@ -213,13 +213,13 @@ Java_com_SoundX_LiveEffectEngine_Debug(JNIEnv *env, jclass clazz, jint value) {
         return;
     }
     engine->mFullDuplexPass.callback->CompressorOn = value != 0;
-    if (value == 0) {
+    if (value < 2) {
         engine->mFullDuplexPass.setDefault();
     } else
     {
         engine->mFullDuplexPass.callback->UpdateSettings(
                 engine->mFullDuplexPass.callback->settings.Presets.find(
-                        value == 1 ?
+                        value == 2 ?
                         "MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER" :
                         "HUMAN-VOICE_SINGING_MALE_SINGING"
                 )->second
