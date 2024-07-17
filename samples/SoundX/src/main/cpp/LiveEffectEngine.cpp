@@ -90,6 +90,11 @@ oboe::Result  LiveEffectEngine::openStreams() {
 
     mFullDuplexPass.setInputStream(mRecordingStream.get());
     mFullDuplexPass.setOutputStream(mPlayStream.get());
+
+    assert(mRecordingStream->getFormat() == mPlayStream->getFormat());
+    mFullDuplexPass.mFormat = mRecordingStream->getFormat();
+    mFullDuplexPass.callback->maxIn = mRecordingStream->getChannelCount();
+    mFullDuplexPass.callback->maxout = mRecordingStream->getChannelCount();
     return result;
 }
 
@@ -109,7 +114,6 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupRecordingStreamParameters(
 //            ->setUsage(oboe::Usage::Game)
 //            ->setAllowedCapturePolicy(oboe::AllowedCapturePolicy::None)
             ->setDirection(oboe::Direction::Input)
-            ->setFormatConversionAllowed(true)
             ->setChannelCount(mInputChannelCount);
     return setupCommonStreamParameters(builder);
 }
@@ -147,6 +151,8 @@ oboe::AudioStreamBuilder *LiveEffectEngine::setupCommonStreamParameters(
     builder->setAudioApi(mAudioApi)
             ->setFormat(mFormat)
             ->setSharingMode(oboe::SharingMode::Exclusive)
+            //->setFormatConversionAllowed(true)
+            //->setChannelConversionAllowed(true)
             ->setPerformanceMode(oboe::PerformanceMode::LowLatency);
     return builder;
 }

@@ -12,17 +12,13 @@ public:
         callback->input1RChannels = { 1 };
         callback->output1LChannels = { 0 };
         callback->output1RChannels = { 1 };
-        callback->output2LChannels = {  };
-        callback->output2RChannels = {  };
-        callback->maxIn = 2;
-        callback->maxOut = 2;
+        callback->maxIn = 1;
+        callback->maxOut = 1;
         callback->settings.ai = true;
         callback->CompressorOn = true;
         callback->settings.fadeOn = false;
         callback->settings.peakFilter = false;
         callback->settings.samplerate = 48000;
-        callback->settings.master_gain_L = 10;
-        callback->settings.master_gain_R = 10;
         callback->Compressor->_prepare(48000, 1024);
         callback->Compressor->setAttackTime(0.000012);
         callback->Compressor->setReleaseTime(0.195);
@@ -34,22 +30,24 @@ public:
 
         //const auto& Settings = *callback->settings.Presets.find("Default");
         //callback->UpdateSettings(Settings.second);
-        setDefault();
+        //setDefault();
     }
 
     void setDefault()
     {
         PresetSettings Nul;
 
-        Nul.fc_low_1 = { 0,0,0,0,0,0 };
-        Nul.fc_high_1 = { 20000, 20000, 20000, 20000, 20000, 20000 };
-        Nul.fc_low_2 = { 0,0,0,0,0,0 };
-        Nul.fc_high_2 = { 20000, 20000, 20000, 20000, 20000, 20000 };
-        Nul.pitch = { 0, 0, 0, 0, 0, 0 };
-        Nul.gain_L = { 0, 0, 0, 0, 0, 0 };
-        Nul.gain_R = { 0, 0, 0, 0, 0, 0 };
+        Nul.fc_low_1 = { 0,0,0,0,0 };
+        Nul.fc_high_1 = { 20000, 20000, 20000, 20000, 20000};
+        Nul.fc_low_2 = { 0,0,0,0,0 };
+        Nul.fc_high_2 = { 20000, 20000, 20000, 20000, 20000 };
+        Nul.pitch = { 0, 0, 0, 0, 0};
+        Nul.gain_L = { 0, 0, 0, 0, 0};
+        Nul.gain_R = { 0, 0, 0, 0, 0};
         callback->UpdateSettings(Nul);
     }
+
+    oboe::AudioFormat mFormat = oboe::AudioFormat::I16;
 
     virtual oboe::DataCallbackResult
     onBothStreamsReady(
@@ -57,13 +55,12 @@ public:
             int   numInputFrames,
             void *outputData,
             int   numOutputFrames) {
-        const float *inputFloats = static_cast<const float *>(inputData);
-        float *outputFloats = static_cast<float *>(outputData);
-
-        //LOGD("frames %d", numInputFrames);
-        if (numInputFrames > 0)
+        if (mFormat == oboe::AudioFormat::I16)
         {
-            callback->tick(inputFloats, outputFloats, numInputFrames);
+            using format = short;
+            const auto* in = static_cast<const format*>(inputData);
+            auto* out = static_cast<format*>(outputData);
+            callback->tickShort(in, out, numInputFrames);
         }
         return oboe::DataCallbackResult::Continue;
     }

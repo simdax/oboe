@@ -211,11 +211,11 @@ public class MainActivity extends FragmentActivity
     }
 
     private void StopService() {
-        Context context = getApplicationContext();
-        Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.stopService(intent);
-        }
+        //Context context = getApplicationContext();
+        //Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //    context.stopService(intent);
+        //}
     }
 
     @Override
@@ -286,7 +286,7 @@ public class MainActivity extends FragmentActivity
         Context context = getApplicationContext();
         Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startService(intent);
+            //context.startService(intent);
         }
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
