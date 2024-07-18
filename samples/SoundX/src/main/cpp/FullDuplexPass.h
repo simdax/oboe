@@ -28,8 +28,8 @@ public:
         callback->Compressor->setMakeUpGain(5);
         callback->setPresetMode(0);
 
-        //const auto& Settings = *callback->settings.Presets.find("Default");
-        //callback->UpdateSettings(Settings.second);
+        const auto& Settings = *callback->settings.Presets.find("Default");
+        callback->UpdateSettings(Settings.second);
         //setDefault();
     }
 
@@ -47,7 +47,7 @@ public:
         callback->UpdateSettings(Nul);
     }
 
-    static constexpr size_t b = 512;
+    static constexpr size_t b = 1024;
 
     float frames_mono[b];
     float frames_stereo_L[b];
@@ -58,13 +58,40 @@ public:
     float frames_band_R[b];
 
     void process(const size_t bufferFrames) {
+        for (unsigned int i = 0; i < bufferFrames; i++) {
+            frames_stereo_L[i] = 0;
+            frames_stereo_R[i] = 0;
+        }
         for (int band = 0; band < callback->settings.freq_bands - 1; band++) {
             if (!callback->settings.mute[band] &&
                 (!callback->settings.solo_on || callback->settings.solo[band])) { // Solo and Mute logic
-                std::memcpy(frames_band, frames_mono, sizeof(frames_band));
+                std::memcpy(frames_band, frames_mono, bufferFrames * sizeof(float));
                 callback->apply_bandpass_filter(*callback->filters_low_1[band], *callback->filters_high_1[band], frames_band, bufferFrames); // Filters 1
+                auto octave = callback->settings.pitch[band];
+                callback->apply_pitcher(frames_band, *callback->pitchers[band], bufferFrames); // Pitchers
+                if (octave < 0) {
+                    callback->apply_gain_db(frames_band, 3.4 * -octave, bufferFrames);
+                }
+                callback->apply_bandpass_filter(*callback->filters_low_2[band], *callback->filters_high_2[band], frames_band, bufferFrames); // Filters 2
+                std::memcpy(frames_band_L, frames_band, bufferFrames * sizeof(float));
+                std::memcpy(frames_band_R, frames_band, bufferFrames * sizeof(float));
+                callback->apply_gain_ratio(frames_band_L, 1.5 * 0.5 / (callback->settings.freq_bands - 1), bufferFrames); // Gain ratio
+                callback->apply_gain_ratio(frames_band_R, 1.5 * 0.5 / (callback->settings.freq_bands - 1), bufferFrames);
+                callback->apply_gain_db(frames_band_L, callback->settings.gain_L[band], bufferFrames);
+                callback->apply_gain_db(frames_band_R, callback->settings.gain_R[band], bufferFrames);
+                for (unsigned int i = 0; i < bufferFrames; i++) {
+                    const auto& [sample_L, sample_R] = callback->UpdateGains(frames_band_L[i], frames_band_R[i], band);
+                    frames_stereo_L[i] += sample_L;
+                    frames_stereo_R[i] += sample_R;
+                }
             }
         }
+        callback->apply_gain_db(frames_stereo_L, callback->settings.master_gain_L, bufferFrames);
+        callback->apply_gain_db(frames_stereo_R, callback->settings.master_gain_R, bufferFrames);
+        callback->apply_gain_db(frames_stereo_L, 6, bufferFrames);
+        callback->apply_gain_db(frames_stereo_R, 6, bufferFrames);
+        float* channels[2] = { &frames_stereo_L[0], &frames_stereo_R[0] };
+        callback->Compressor->_process2(channels, 2, bufferFrames);
     }
 
     virtual oboe::DataCallbackResult
@@ -78,17 +105,17 @@ public:
         float *outputFloats = static_cast<float *>(outputData);
 
         for (int32_t i = 0; i < numInputFrames; i++) {
-            frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 +1]) / 2; // do some arbitrary processing
+            frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 2; // do some arbitrary processing
         }
-        //process(numInputFrames);
+        process(numInputFrames);
         for (int32_t i = 0; i < numInputFrames; i++) {
-            outputFloats[i * 2] = frames_mono[i];
-            outputFloats[i * 2 + 1] = frames_mono[i];
+            outputFloats[i * 2] = frames_stereo_L[i];
+            outputFloats[i * 2 + 1] = frames_stereo_R[i];
         }
         return oboe::DataCallbackResult::Continue;
 
         for (int32_t i = 0; i < numInputFrames * 2; i++) {
-            *outputFloats++ = *inputFloats++ * 0.95; // do some arbitrary processing
+            *outputFloats++ = *inputFloats++ * 0.95f; // do some arbitrary processing
         }
         return oboe::DataCallbackResult::Continue;
     }
