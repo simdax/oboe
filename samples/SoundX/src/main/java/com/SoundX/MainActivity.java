@@ -1,5 +1,7 @@
 package com.SoundX;
 
+import static com.google.oboe.samples.liveEffect.DuplexStreamForegroundService.ACTION_START;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
+import com.google.oboe.samples.liveEffect.DuplexStreamForegroundService;
 import com.google.oboe.samples.liveEffect.R;
 
 import java.util.Map;
@@ -131,6 +134,11 @@ public class MainActivity extends FragmentActivity
             }
         });
         LiveEffectEngine.setDefaultStreamValues(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Intent serviceIntent = new Intent(ACTION_START, null, this,
+                    DuplexStreamForegroundService.class);
+            startForegroundService(serviceIntent);
+        }
     }
 
     private void EnableAudioApiUI(boolean enable) {
@@ -207,7 +215,7 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        StopService();
+        //StopService();
     }
 
     private void StopService() {
@@ -251,7 +259,7 @@ public class MainActivity extends FragmentActivity
     public void toggleEffect() {
         if (isPlaying) {
             stopEffect();
-            StopService();
+            //StopService();
         } else {
             LiveEffectEngine.setAPI(apiSelection);
             startEffect();
@@ -283,11 +291,11 @@ public class MainActivity extends FragmentActivity
     }
 
     private void Play() {
-        Context context = getApplicationContext();
-        Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //context.startService(intent);
-        }
+        //Context context = getApplicationContext();
+        //Intent intent = new Intent(context, AudioService.class);// Build the intent for the service
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //    //context.startService(intent);
+        //}
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
             statusText.setText(R.string.status_playing);

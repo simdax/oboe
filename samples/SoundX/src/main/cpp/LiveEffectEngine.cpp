@@ -92,9 +92,9 @@ oboe::Result  LiveEffectEngine::openStreams() {
     mFullDuplexPass.setOutputStream(mPlayStream.get());
 
     assert(mRecordingStream->getFormat() == mPlayStream->getFormat());
-    mFullDuplexPass.mFormat = mRecordingStream->getFormat();
-    mFullDuplexPass.callback->maxIn = mRecordingStream->getChannelCount();
-    mFullDuplexPass.callback->maxout = mRecordingStream->getChannelCount();
+    //mFullDuplexPass.mFormat = mRecordingStream->getFormat();
+    //mFullDuplexPass.callback->maxIn = mRecordingStream->getChannelCount();
+    //mFullDuplexPass.callback->maxout = mRecordingStream->getChannelCount();
     return result;
 }
 
