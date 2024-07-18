@@ -47,35 +47,49 @@ public:
         callback->UpdateSettings(Nul);
     }
 
+    static constexpr size_t b = 512;
+
+    float frames_mono[b];
+    float frames_stereo_L[b];
+    float frames_stereo_R[b];
+    float frames_stereo_out[b * 2];
+    float frames_band[b];
+    float frames_band_L[b];
+    float frames_band_R[b];
+
+    void process(const size_t bufferFrames) {
+        for (int band = 0; band < callback->settings.freq_bands - 1; band++) {
+            if (!callback->settings.mute[band] &&
+                (!callback->settings.solo_on || callback->settings.solo[band])) { // Solo and Mute logic
+                std::memcpy(frames_band, frames_mono, sizeof(frames_band));
+                callback->apply_bandpass_filter(*callback->filters_low_1[band], *callback->filters_high_1[band], frames_band, bufferFrames); // Filters 1
+            }
+        }
+    }
+
     virtual oboe::DataCallbackResult
     onBothStreamsReady(
             const void *inputData,
             int   numInputFrames,
             void *outputData,
             int   numOutputFrames) {
-        // Copy the input samples to the output with a little arbitrary gain change.
 
-        // This code assumes the data format for both streams is Float.
         const float *inputFloats = static_cast<const float *>(inputData);
         float *outputFloats = static_cast<float *>(outputData);
 
-        // It also assumes the channel count for each stream is the same.
-        int32_t samplesPerFrame = getOutputStream()->getChannelCount();
-        int32_t numInputSamples = numInputFrames * samplesPerFrame;
-        int32_t numOutputSamples = numOutputFrames * samplesPerFrame;
+        for (int32_t i = 0; i < numInputFrames; i++) {
+            frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 +1]) / 2; // do some arbitrary processing
+        }
+        //process(numInputFrames);
+        for (int32_t i = 0; i < numInputFrames; i++) {
+            outputFloats[i * 2] = frames_mono[i];
+            outputFloats[i * 2 + 1] = frames_mono[i];
+        }
+        return oboe::DataCallbackResult::Continue;
 
-        // It is possible that there may be fewer input than output samples.
-        int32_t samplesToProcess = std::min(numInputSamples, numOutputSamples);
-        for (int32_t i = 0; i < samplesToProcess; i++) {
+        for (int32_t i = 0; i < numInputFrames * 2; i++) {
             *outputFloats++ = *inputFloats++ * 0.95; // do some arbitrary processing
         }
-
-        // If there are fewer input samples then clear the rest of the buffer.
-        int32_t samplesLeft = numOutputSamples - numInputSamples;
-        for (int32_t i = 0; i < samplesLeft; i++) {
-            *outputFloats++ = 0.0; // silence
-        }
-
         return oboe::DataCallbackResult::Continue;
     }
 

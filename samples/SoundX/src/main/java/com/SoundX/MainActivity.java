@@ -282,8 +282,9 @@ public class MainActivity extends FragmentActivity
             Play();
             return null;
         };
-        if (Password.input != null
-                && Password.input.getText().toString().equals(Pass)) {
+        if (true) {
+                // Password.input != null
+                //&& Password.input.getText().toString().equals(Pass)) {
             Play();
         } else {
             Password.show(getSupportFragmentManager(), "Password");
