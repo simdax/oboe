@@ -1,6 +1,7 @@
 package com.SoundX;
 
 import static com.SoundX.DuplexStreamForegroundService.ACTION_START;
+import static com.SoundX.DuplexStreamForegroundService.ACTION_STOP;
 
 import android.Manifest;
 import android.content.Context;
@@ -213,6 +214,11 @@ public class MainActivity extends FragmentActivity
 
     @Override
     protected void onDestroy() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Intent serviceIntent = new Intent(ACTION_STOP, null, this,
+                    DuplexStreamForegroundService.class);
+            startForegroundService(serviceIntent);
+        }
         super.onDestroy();
         //StopService();
     }
@@ -228,7 +234,7 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onPause() {
         super.onPause();
-        LiveEffectEngine.delete();
+        //LiveEffectEngine.delete();
     }
 
     @Override
