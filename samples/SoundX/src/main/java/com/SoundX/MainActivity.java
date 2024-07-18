@@ -1,6 +1,6 @@
 package com.SoundX;
 
-import static com.google.oboe.samples.liveEffect.DuplexStreamForegroundService.ACTION_START;
+import static com.SoundX.DuplexStreamForegroundService.ACTION_START;
 
 import android.Manifest;
 import android.content.Context;
@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
-import com.google.oboe.samples.liveEffect.DuplexStreamForegroundService;
 import com.google.oboe.samples.liveEffect.R;
 
 import java.util.Map;
