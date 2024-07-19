@@ -52,7 +52,6 @@ public:
     float frames_mono[b];
     float frames_stereo_L[b];
     float frames_stereo_R[b];
-    float frames_stereo_out[b * 2];
     float frames_band[b];
     float frames_band_L[b];
     float frames_band_R[b];
@@ -105,7 +104,7 @@ public:
         float *outputFloats = static_cast<float *>(outputData);
 
         for (int32_t i = 0; i < numInputFrames; i++) {
-            frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 2; // do some arbitrary processing
+            frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 3; // do some arbitrary processing
         }
         process(numInputFrames);
         for (int32_t i = 0; i < numInputFrames; i++) {

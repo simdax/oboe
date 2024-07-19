@@ -71,6 +71,11 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -185,27 +190,6 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        //AudioAttributes mPlaybackAttributes = new AudioAttributes.Builder()
-        //        .setUsage(AudioAttributes.USAGE_MEDIA)
-        //        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-        //        .build();
-        //AudioFocusRequest mFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
-//                .setAudioAttributes(mPlaybackAttributes)
-//                .setAcceptsDelayedFocusGain(true)
-//                .setWillPauseWhenDucked(true)
-//                .setOnAudioFocusChangeListener(new Focus())
-//                .build();
-        //int res = mAudioManager.requestAudioFocus(mFocusRequest);
-        //Toast.makeText(this, "", Toast.LENGTH_LONG).show();
-        //setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    }
-
     @Override
     protected void onStop() {
         //stopEffect();
@@ -282,9 +266,9 @@ public class MainActivity extends FragmentActivity
             Play();
             return null;
         };
-        if (true) {
-                // Password.input != null
-                //&& Password.input.getText().toString().equals(Pass)) {
+        //if (true) {
+        if( Password.input != null
+                && Password.input.getText().toString().equals(Pass)) {
             Play();
         } else {
             Password.show(getSupportFragmentManager(), "Password");
