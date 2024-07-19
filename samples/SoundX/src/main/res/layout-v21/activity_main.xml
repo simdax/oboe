@@ -88,7 +88,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Debug"
         tools:ignore="TextSizeCheck"
@@ -120,42 +120,53 @@
 
     <RadioGroup
         android:id="@+id/Debug"
-        android:layout_width="360dp"
-        android:layout_height="184dp"
+        android:layout_width="352dp"
+        android:layout_height="340dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/noProcess"
+        <CheckBox
+            android:id="@+id/aaFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="noProcess" />
+            android:text="aaFilter" />
 
-        <RadioButton
-            android:id="@+id/Compressor"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/aaFilterLen"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compressor" />
+            android:ems="10"
+            android:inputType="number" />
 
-        <RadioButton
-            android:id="@+id/presetOne"
+        <CheckBox
+            android:id="@+id/quickSeek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER" />
+            android:text="quickSeek" />
 
-        <RadioButton
-            android:id="@+id/presetTwo"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/sequence_ms"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HUMAN-VOICE_SINGING_MALE_SINGING" />
+            android:ems="10"
+            android:inputType="number" />
 
-        <RadioButton
-            android:id="@+id/IA"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/seekwindow_ms"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IA" />
+            android:ems="10"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/overlap_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

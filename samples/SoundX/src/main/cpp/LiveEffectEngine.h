@@ -44,7 +44,7 @@ private:
     //const oboe::AudioFormat mFormat = oboe::AudioFormat::Float; // for easier processing
     const oboe::AudioFormat mFormat = oboe::AudioFormat::Unspecified; // for easier processing
     oboe::AudioApi    mAudioApi = oboe::AudioApi::AAudio;
-    int32_t           mSampleRate = oboe::kUnspecified;
+    int32_t           mSampleRate = 48000;//oboe::kUnspecified;
     const int32_t     mInputChannelCount = oboe::ChannelCount::Unspecified;
     const int32_t     mOutputChannelCount = oboe::ChannelCount::Unspecified;
 

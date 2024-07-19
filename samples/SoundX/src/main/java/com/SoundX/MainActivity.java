@@ -16,10 +16,13 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,7 +37,7 @@ import java.util.Map;
 public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    public static String Pass = "JO2024";
+    public static String Pass = " JO2024";
 
     private static final String TAG = MainActivity.class.getName();
     private static final int AUDIO_EFFECT_REQUEST = 0;
@@ -225,17 +228,23 @@ public class MainActivity extends FragmentActivity
     protected void onResume() {
         super.onResume();
         create(findViewById(R.id.presets));
-        Map<Integer, Integer> Debug = Map.of(
-                R.id.noProcess, 0,
-                R.id.Compressor, 1,
-                R.id.presetOne, 2,
-                R.id.presetTwo, 3,
-                R.id.IA, 4
-        );
-        for (Map.Entry<Integer, Integer> e: Debug.entrySet())
+
+        for (Map.Entry<Integer, Integer> e: Map.of(
+                R.id.aaFilter, 0,
+                R.id.quickSeek, 2).entrySet()) {
+            findViewById(e.getKey()).setOnClickListener(v -> {
+                LiveEffectEngine.Debug(e.getValue(), v.isActivated() ? 1 : 0);
+            });
+        }
+        for (Map.Entry<Integer, Integer> e: Map.of(
+                R.id.aaFilterLen, 1,
+                R.id.sequence_ms, 3,
+                R.id.seekwindow_ms, 4,
+                R.id.overlap_ms, 5).entrySet())
         {
             findViewById(e.getKey()).setOnClickListener(v -> {
-                LiveEffectEngine.Debug(e.getValue());
+                Editable value = ((EditText)v).getText();
+                LiveEffectEngine.Debug(e.getValue(), Integer.parseInt(value.toString()));
             });
         }
 
@@ -266,9 +275,9 @@ public class MainActivity extends FragmentActivity
             Play();
             return null;
         };
-        //if (true) {
-        if( Password.input != null
-                && Password.input.getText().toString().equals(Pass)) {
+        if (true) {
+        //if( Password.input != null
+        //        && Password.input.getText().toString().equals(Pass)) {
             Play();
         } else {
             Password.show(getSupportFragmentManager(), "Password");
