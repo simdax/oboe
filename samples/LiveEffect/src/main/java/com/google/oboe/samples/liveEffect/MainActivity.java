@@ -233,7 +233,11 @@ public class MainActivity extends Activity
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                LiveEffectEngine.Debug(0, 1);
+                ((CheckBox)findViewById(R.id.aaFilter)).setChecked(isPlaying);
+                if (isPlaying)
+                {
+                    LiveEffectEngine.Debug(0, 1);
+                }
             }
         }, 1500);
     }
