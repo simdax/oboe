@@ -29,6 +29,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -220,6 +221,8 @@ public class MainActivity extends Activity
         LiveEffectEngine.delete();
     }
 
+    final Handler handler = new Handler();
+
     public void toggleEffect() {
         if (isPlaying) {
             stopEffect();
@@ -227,7 +230,12 @@ public class MainActivity extends Activity
             LiveEffectEngine.setAPI(apiSelection);
             startEffect();
         }
-        ((CheckBox)findViewById(R.id.aaFilter)).setChecked(isPlaying);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((CheckBox)findViewById(R.id.aaFilter)).setChecked(isPlaying);
+            }
+        }, 3000);
     }
 
     private void startEffect() {
