@@ -132,3 +132,13 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_native_1setDefaultStrea
     oboe::DefaultStreamValues::FramesPerBurst = (int32_t) framesPerBurst;
 }
 } // extern "C"
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Debug(JNIEnv *env, jclass clazz, jint setting, jint value) {
+    if (!engine){
+        return;
+    }
+    engine->mDuplexStream->callback->setPitchers(setting, value);
+    // TODO: implement Debug()
+}

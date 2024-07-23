@@ -61,7 +61,9 @@ private:
     const int32_t     mInputChannelCount = oboe::ChannelCount::Stereo;
     const int32_t     mOutputChannelCount = oboe::ChannelCount::Stereo;
 
+public:
     std::unique_ptr<FullDuplexPass> mDuplexStream;
+private:
     std::shared_ptr<oboe::AudioStream> mRecordingStream;
     std::shared_ptr<oboe::AudioStream> mPlayStream;
 

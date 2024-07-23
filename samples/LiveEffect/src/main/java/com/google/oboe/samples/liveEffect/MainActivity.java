@@ -28,10 +28,13 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -39,6 +42,8 @@ import android.widget.Toast;
 
 import com.google.oboe.samples.audio_device.AudioDeviceListEntry;
 import com.google.oboe.samples.audio_device.AudioDeviceSpinner;
+
+import java.util.Map;
 
 /**
  * TODO: Update README.md and go through and comment sample
@@ -135,6 +140,26 @@ public class MainActivity extends Activity
                     DuplexStreamForegroundService.class);
             startForegroundService(serviceIntent);
         }
+        for (Map.Entry<Integer, Integer> e: Map.of(
+                R.id.aaFilter, 0
+                //R.id.quickSeek, 2
+        ).entrySet()) {
+            findViewById(e.getKey()).setOnClickListener(v -> {
+                LiveEffectEngine.Debug(e.getValue(), v.isActivated() ? 1 : 0);
+            });
+        }
+        //for (Map.Entry<Integer, Integer> e: Map.of(
+        //        //R.id.aaFilterLen, 1,
+        //        //R.id.sequence_ms, 3,
+        //        //R.id.seekwindow_ms, 4,
+        //        //R.id.overlap_ms, 5
+        //).entrySet())
+        //{
+        //    findViewById(e.getKey()).setOnClickListener(v -> {
+        //        Editable value = ((EditText)v).getText();
+        //        LiveEffectEngine.Debug(e.getValue(), Integer.parseInt(value.toString()));
+        //    });
+        //}
 
         onStartTest();
     }
