@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -226,6 +227,7 @@ public class MainActivity extends Activity
             LiveEffectEngine.setAPI(apiSelection);
             startEffect();
         }
+        ((CheckBox)findViewById(R.id.aaFilter)).setChecked(isPlaying);
     }
 
     private void startEffect() {
