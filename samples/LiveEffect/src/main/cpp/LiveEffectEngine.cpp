@@ -48,6 +48,7 @@ bool LiveEffectEngine::setEffectOn(bool isOn) {
             success = openStreams() == oboe::Result::OK;
             if (success) {
                 mIsEffectOn = isOn;
+                mDuplexStream->callback->setPitchers(0, 1);
             }
         } else {
             closeStreams();
