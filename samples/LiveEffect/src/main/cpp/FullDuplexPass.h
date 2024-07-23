@@ -30,7 +30,6 @@ public:
 
         const auto& Settings = *callback->settings.Presets.find("MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER");
         callback->UpdateSettings(Settings.second);
-        //setDefault();
     }
 
     void setDefault()
@@ -103,39 +102,21 @@ public:
         const float *inputFloats = static_cast<const float *>(inputData);
         float *outputFloats = static_cast<float *>(outputData);
 
-        //for (int32_t i = 0; i < numInputFrames; i++) {
-        //    frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 2; // do some arbitrary processing
-        //}
-        //process(numInputFrames);
-        //for (int32_t i = 0; i < numInputFrames; i++) {
-        //    outputFloats[i * 2] = frames_stereo_L[i];
-        //    outputFloats[i * 2 + 1] = frames_stereo_R[i];
-        //}
-        //return oboe::DataCallbackResult::Continue;
+        for (int32_t i = 0; i < numInputFrames; i++) {
+            frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 2; // do some arbitrary processing
+        }
+        process(numInputFrames);
+        for (int32_t i = 0; i < numInputFrames; i++) {
+            outputFloats[i * 2] = frames_stereo_L[i];
+            outputFloats[i * 2 + 1] = frames_stereo_R[i];
+        }
+        return oboe::DataCallbackResult::Continue;
 
         for (int32_t i = 0; i < numInputFrames * 2; i++) {
             *outputFloats++ = *inputFloats++ * 0.95f; // do some arbitrary processing
         }
         return oboe::DataCallbackResult::Continue;
     }
-
-//    oboe::AudioFormat mFormat = oboe::AudioFormat::I16;
-//
-//    virtual oboe::DataCallbackResult
-//    onBothStreamsReady(
-//            const void *inputData,
-//            int   numInputFrames,
-//            void *outputData,
-//            int   numOutputFrames) {
-//        if (mFormat == oboe::AudioFormat::I16)
-//        {
-//            using format = short;
-//            const auto* in = static_cast<const format*>(inputData);
-//            auto* out = static_cast<format*>(outputData);
-//            callback->tickShort(in, out, numInputFrames);
-//        }
-//        return oboe::DataCallbackResult::Continue;
-//    }
 
     std::unique_ptr<CallbackDataStruct> callback;
 };
