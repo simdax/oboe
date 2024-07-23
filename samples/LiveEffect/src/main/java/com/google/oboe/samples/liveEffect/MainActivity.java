@@ -235,7 +235,7 @@ public class MainActivity extends Activity
             public void run() {
                 ((CheckBox)findViewById(R.id.aaFilter)).setChecked(isPlaying);
             }
-        }, 3000);
+        }, 1000);
     }
 
     private void startEffect() {
