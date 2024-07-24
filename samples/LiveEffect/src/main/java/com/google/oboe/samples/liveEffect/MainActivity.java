@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import android.os.Handler;
 import android.text.Editable;
@@ -51,8 +52,11 @@ import java.util.Map;
 /**
  * TODO: Update README.md and go through and comment sample
  */
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
+
+    public static String Pass = "JO2024";
+    private final Password Password = new Password();
 
     private static final String TAG = MainActivity.class.getName();
     private static final int AUDIO_EFFECT_REQUEST = 0;
@@ -71,6 +75,7 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         statusText = findViewById(R.id.status_view_text);
@@ -224,19 +229,34 @@ public class MainActivity extends Activity
 
     final Handler handler = new Handler();
 
-    public void toggleEffect() {
-        if (isPlaying) {
-            stopEffect();
-        } else {
-            LiveEffectEngine.setAPI(apiSelection);
-            startEffect();
-        }
+    private void ToggleAAFilter(){
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 ((CheckBox)findViewById(R.id.aaFilter)).toggle();
             }
         }, 500);
+    }
+
+    public void toggleEffect() {
+        if (isPlaying) {
+            stopEffect();
+            ToggleAAFilter();
+        } else {
+            LiveEffectEngine.setAPI(apiSelection);
+            Password.OK = () -> {
+                startEffect();
+                ToggleAAFilter();
+                return null;
+            };
+            if (Password.input != null
+                    && Password.input.getText().toString().equals(Pass)) {
+                startEffect();
+                ToggleAAFilter();
+            } else {
+                Password.show(getSupportFragmentManager(), "Password");
+            }
+        }
     }
 
     private void startEffect() {

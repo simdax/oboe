@@ -32,22 +32,7 @@ public:
         callback->UpdateSettings(Settings.second);
     }
 
-    void setDefault()
-    {
-        PresetSettings Nul;
-
-        Nul.fc_low_1 = { 0,0,0,0,0 };
-        Nul.fc_high_1 = { 20000, 20000, 20000, 20000, 20000};
-        Nul.fc_low_2 = { 0,0,0,0,0 };
-        Nul.fc_high_2 = { 20000, 20000, 20000, 20000, 20000 };
-        Nul.pitch = { 0, 0, 0, 0, 0};
-        Nul.gain_L = { 0, 0, 0, 0, 0};
-        Nul.gain_R = { 0, 0, 0, 0, 0};
-        callback->UpdateSettings(Nul);
-    }
-
     static constexpr size_t b = 1024;
-
     float frames_mono[b];
     float frames_stereo_L[b];
     float frames_stereo_R[b];
