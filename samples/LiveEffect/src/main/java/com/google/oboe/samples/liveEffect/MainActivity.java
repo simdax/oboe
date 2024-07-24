@@ -23,6 +23,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.CursorJoiner;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -146,7 +147,7 @@ public class MainActivity extends Activity
                 R.id.aaFilter, 0
                 //R.id.quickSeek, 2
         ).entrySet()) {
-            findViewById(e.getKey()).setOnClickListener(v -> {
+            ((CheckBox)findViewById(e.getKey())).setOnCheckedChangeListener((v, isChecked) -> {
                 LiveEffectEngine.Debug(e.getValue(), v.isActivated() ? 1 : 0);
             });
         }
@@ -233,11 +234,7 @@ public class MainActivity extends Activity
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ((CheckBox)findViewById(R.id.aaFilter)).setChecked(isPlaying);
-                if (isPlaying)
-                {
-                    LiveEffectEngine.Debug(0, 1);
-                }
+                ((CheckBox)findViewById(R.id.aaFilter)).toggle();
             }
         }, 1500);
     }
