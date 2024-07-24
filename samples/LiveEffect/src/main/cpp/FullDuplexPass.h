@@ -18,6 +18,8 @@ public:
         callback->CompressorOn = true;
         callback->settings.fadeOn = false;
         callback->settings.peakFilter = false;
+        callback->settings.master_gain_L = 10;
+        callback->settings.master_gain_R = 10;
         callback->settings.samplerate = 48000;
         callback->Compressor->_prepare(48000, 1024);
         callback->Compressor->setAttackTime(0.000012);

@@ -150,25 +150,11 @@ public class MainActivity extends FragmentActivity
         }
         for (Map.Entry<Integer, Integer> e: Map.of(
                 R.id.aaFilter, 0
-                //R.id.quickSeek, 2
         ).entrySet()) {
             ((CheckBox)findViewById(e.getKey())).setOnCheckedChangeListener((v, isChecked) -> {
                 LiveEffectEngine.Debug(e.getValue(), v.isActivated() ? 1 : 0);
             });
         }
-        //for (Map.Entry<Integer, Integer> e: Map.of(
-        //        //R.id.aaFilterLen, 1,
-        //        //R.id.sequence_ms, 3,
-        //        //R.id.seekwindow_ms, 4,
-        //        //R.id.overlap_ms, 5
-        //).entrySet())
-        //{
-        //    findViewById(e.getKey()).setOnClickListener(v -> {
-        //        Editable value = ((EditText)v).getText();
-        //        LiveEffectEngine.Debug(e.getValue(), Integer.parseInt(value.toString()));
-        //    });
-        //}
-
         onStartTest();
     }
 

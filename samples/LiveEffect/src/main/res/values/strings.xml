@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">LiveEffect</string>
+    <string name="app_name">SoundX</string>
     <string name="action_settings">Settings</string>
-    <string name="start_effect">Start</string>
-    <string name="stop_effect">Stop</string>
+    <string name="start_effect">START</string>
+    <string name="stop_effect">STOP</string>
     <string name="need_record_audio_permission">"This sample needs RECORD_AUDIO permission"</string>
     <string name="status_playing">Engine Playing ....</string>
     <string name="status_open_failed">Engine Failed to Open Streams!</string>
@@ -16,4 +16,7 @@
     <string name="apiSelection">APIs</string>
     <string name="aaudio">AAudio</string>
     <string name="sles">OpenSL ES</string>
+
+    <string name="titre">Le pouvoir de l\'inclusivité.\nDans votre poche.</string>
+    <string name="phrase">Activez la première IA qui traduit en temps réel le son en vibrations. Fait pour et par la communauté sourde.</string>
 </resources>
