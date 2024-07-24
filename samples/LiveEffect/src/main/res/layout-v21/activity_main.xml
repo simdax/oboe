@@ -22,14 +22,14 @@
     tools:context="com.google.oboe.samples.liveEffect.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <RadioGroup
         android:id="@+id/apiSelectionGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -60,20 +60,19 @@
         android:id="@+id/recDeviceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/recording_device"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apiSelectionGroup"/>
+        app:layout_constraintTop_toBottomOf="@+id/apiSelectionGroup" />
 
     <com.google.oboe.samples.audio_device.AudioDeviceSpinner
         android:id="@+id/recording_devices_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="0dp"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recDeviceLabel" />
 
@@ -81,10 +80,10 @@
         android:id="@+id/playDeviceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/playback_device"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recording_devices_spinner" />
 
@@ -92,9 +91,8 @@
         android:id="@+id/playback_devices_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="0dp"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playDeviceLabel" />
 
@@ -116,20 +114,22 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_group_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:lines="6"
         android:text="@string/status_warning"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect" />
 
     <RadioGroup
         android:layout_width="207dp"
         android:layout_height="161dp"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@+id/button_toggle_effect"
-        tools:layout_editor_absoluteX="67dp" >
+        tools:layout_editor_absoluteX="67dp">
 
         <CheckBox
             android:id="@+id/aaFilter"
