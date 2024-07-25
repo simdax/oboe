@@ -92,6 +92,7 @@ public:
         for (int32_t i = 0; i < numInputFrames; i++) {
             frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 3; // do some arbitrary processing
         }
+        callback->SpawnAI(frames_mono, numInputFrames);
         process(numInputFrames);
         for (int32_t i = 0; i < numInputFrames; i++) {
             outputFloats[i * 2] = frames_stereo_L[i];
