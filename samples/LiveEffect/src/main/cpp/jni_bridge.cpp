@@ -22,8 +22,62 @@ static const int kOboeApiAAudio = 0;
 static const int kOboeApiOpenSLES = 1;
 
 static LiveEffectEngine *engine = nullptr;
+JavaVM* vm;
+jobject Text;
 
 extern "C" {
+
+void Update(
+        double presetSettings_gain_L_0, double presetSettings_gain_R_0,
+        double presetSettings_gain_L_1, double presetSettings_gain_R_1,
+        double presetSettings_gain_L_2, double presetSettings_gain_R_2,
+        double presetSettings_gain_L_3, double presetSettings_gain_R_3,
+        double presetSettings_gain_L_4, double presetSettings_gain_R_4,
+        double presetSettings_gain_L_5, double presetSettings_gain_R_5,
+        char *presets, char *meansData) {
+    JNIEnv *e;
+
+    vm->AttachCurrentThread(&e, nullptr);
+    if (
+            vm->GetEnv((void **) &e, JNI_VERSION_1_6) == JNI_OK ||
+            vm->GetEnv((void **) &e, JNI_VERSION_1_4) == JNI_OK ||
+            vm->GetEnv((void **) &e, JNI_VERSION_1_2) == JNI_OK ||
+            vm->GetEnv((void **) &e, JNI_VERSION_1_1) == JNI_OK) {
+        std::stringstream ss;
+        double cpp_gains[12] = {
+                presetSettings_gain_L_0, presetSettings_gain_R_0,
+                presetSettings_gain_L_1, presetSettings_gain_R_1,
+                presetSettings_gain_L_2, presetSettings_gain_R_2,
+                presetSettings_gain_L_3, presetSettings_gain_R_3,
+                presetSettings_gain_L_4, presetSettings_gain_R_4,
+                presetSettings_gain_L_5, presetSettings_gain_R_5,
+        };
+
+        ss << "" << presets << std::endl
+           << "" << meansData << std::endl;
+        jdoubleArray gains = e->NewDoubleArray(12);
+        e->SetDoubleArrayRegion(gains, 0, 12, &cpp_gains[0]);
+        e->CallVoidMethod(Text,
+                          e->GetMethodID(
+                                  e->GetObjectClass(Text),
+                                  "SetIAText",
+                                  "(Ljava/lang/CharSequence;[D)V"),
+                          e->NewStringUTF(ss.str().c_str()), gains
+        );
+    }
+    vm->DetachCurrentThread();
+}
+
+JNIEXPORT void JNICALL
+Java_com_google_oboe_samples_liveEffect_MainActivity_create(JNIEnv *env, jobject obj,
+                                                            jobject view) {
+    if (!engine->mDuplexStream->callback->on_settings_update)
+    {
+        env->GetJavaVM(&vm);
+        Text = env->NewGlobalRef(obj);
+        engine->mDuplexStream->callback->on_settings_update = Update;
+    }
+}
 
 JNIEXPORT jboolean JNICALL
 Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_create(JNIEnv *env,
@@ -140,5 +194,4 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Debug(JNIEnv *env, jcla
         return;
     }
     engine->mDuplexStream->callback->setPitchers(setting, value);
-    // TODO: implement Debug()
 }

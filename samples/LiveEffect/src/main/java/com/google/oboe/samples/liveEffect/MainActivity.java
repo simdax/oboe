@@ -72,6 +72,12 @@ public class MainActivity extends FragmentActivity
     private int apiSelection = OBOE_API_AAUDIO;
     private boolean mAAudioRecommended = true;
 
+    native void create(TextView view);
+
+    void SetIAText(CharSequence str, double[] ignored_gains) {
+        ((TextView)findViewById(R.id.presets)).setText(str);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +261,7 @@ public class MainActivity extends FragmentActivity
 
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
+            create(findViewById(R.id.presets));
             statusText.setText(R.string.status_playing);
             toggleEffectButton.setText(R.string.stop_effect);
             isPlaying = true;
