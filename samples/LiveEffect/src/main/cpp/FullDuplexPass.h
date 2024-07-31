@@ -37,11 +37,21 @@ public:
         std::thread([this](){
             while (true)
             {
-                LOGD("first: %f", frames_mono[0]);
+                auto& buf = buffer_index == 0 ? tmp_1 : tmp_2;
+
+                if (callback->SpawnAI(&buf[0], buf.size())) {
+                    buf.clear();
+                    buffer_index = (buffer_index + 1) % 2;
+                    LOGD("IA has been spouned");
+                }
                 std::this_thread::sleep_for(0.5s);
             }
         }).detach();
     }
+
+    std::atomic<int> buffer_index = 0;
+    std::vector<float> tmp_1;
+    std::vector<float> tmp_2;
 
     static constexpr size_t b = 1024;
     float frames_mono[b];
@@ -100,16 +110,16 @@ public:
 
         for (int32_t i = 0; i < numInputFrames; i++) {
             frames_mono[i] = (inputFloats[i * 2]  + inputFloats[i * 2 + 1]) / 3; // do some arbitrary processing
+            if (buffer_index == 0) {
+                tmp_1.push_back(frames_mono[i]);
+            } else if (buffer_index == 1) {
+                tmp_2.push_back(frames_mono[i]);
+            }
         }
         process(numInputFrames);
         for (int32_t i = 0; i < numInputFrames; i++) {
             outputFloats[i * 2] = frames_stereo_L[i];
             outputFloats[i * 2 + 1] = frames_stereo_R[i];
-        }
-        return oboe::DataCallbackResult::Continue;
-
-        for (int32_t i = 0; i < numInputFrames * 2; i++) {
-            *outputFloats++ = *inputFloats++ * 0.95f; // do some arbitrary processing
         }
         return oboe::DataCallbackResult::Continue;
     }
