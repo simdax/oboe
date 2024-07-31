@@ -3,6 +3,8 @@
 
 #include "SoundX/Audio.h"
 
+using namespace std::literals;
+
 class FullDuplexPass : public oboe::FullDuplexStream {
 public:
     FullDuplexPass()
@@ -32,6 +34,13 @@ public:
 
         const auto& Settings = *callback->settings.Presets.find("MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER");
         callback->UpdateSettings(Settings.second);
+        std::thread([this](){
+            while (true)
+            {
+                LOGD("first: %f", frames_mono[0]);
+                std::this_thread::sleep_for(0.5s);
+            }
+        }).detach();
     }
 
     static constexpr size_t b = 1024;
