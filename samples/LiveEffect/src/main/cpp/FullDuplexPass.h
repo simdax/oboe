@@ -34,12 +34,21 @@ public:
 
         const auto& Settings = *callback->settings.Presets.find("MUSIC_INSTRUMENTS_KEYBOARD_SYNTHESIZER");
         callback->UpdateSettings(Settings.second);
+    }
+
+    void launchIA()
+    {
+        bStopped = false;
         std::thread([this](){
             while (true)
             {
-                auto& buf = buffer_index == 0 ? tmp_1 : tmp_2;
+                if (bStopped)
+                {
+                    return;
+                }
 
-                if (callback->SpawnAI(&buf[0], buf.size())) {
+                auto& buf = buffer_index == 0 ? tmp_1 : tmp_2;
+                if (callback && callback->SpawnAI(&buf[0], buf.size())) {
                     buf.clear();
                     buffer_index = (buffer_index + 1) % 2;
                     LOGD("IA has been spouned");
@@ -49,6 +58,7 @@ public:
         }).detach();
     }
 
+    std::atomic<bool> bStopped = false;
     std::atomic<int> buffer_index = 0;
     std::vector<float> tmp_1;
     std::vector<float> tmp_2;

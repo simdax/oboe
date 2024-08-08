@@ -193,5 +193,10 @@ Java_com_google_oboe_samples_liveEffect_LiveEffectEngine_Debug(JNIEnv *env, jcla
     if (!engine){
         return;
     }
-    engine->mDuplexStream->callback->setPitchers(setting, value);
+    if (engine && engine->mDuplexStream &&
+        engine->mDuplexStream->callback
+            )
+    {
+        engine->mDuplexStream->callback->setPitchers(setting, value);
+    }
 }
