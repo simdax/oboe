@@ -82,6 +82,10 @@ public class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!isRecordPermissionGranted()){
+            requestRecordPermission();
+        }
+
         setContentView(R.layout.activity_main);
 
         statusText = findViewById(R.id.status_view_text);
@@ -149,11 +153,6 @@ public class MainActivity extends FragmentActivity
         LiveEffectEngine.setDefaultStreamValues(this);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Intent serviceIntent = new Intent(ACTION_START, null, this,
-                    DuplexStreamForegroundService.class);
-            startForegroundService(serviceIntent);
-        }
         for (Map.Entry<Integer, Integer> e: Map.of(
                 R.id.aaFilter, 0
         ).entrySet()) {
@@ -254,11 +253,6 @@ public class MainActivity extends FragmentActivity
     private void startEffect() {
         Log.d(TAG, "Attempting to start");
 
-        if (!isRecordPermissionGranted()){
-            requestRecordPermission();
-            return;
-        }
-
         boolean success = LiveEffectEngine.setEffectOn(true);
         if (success) {
             create(findViewById(R.id.presets));
@@ -337,7 +331,11 @@ public class MainActivity extends FragmentActivity
                     .show();
         } else {
             // Permission was granted, start live effect
-            toggleEffect();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Intent serviceIntent = new Intent(ACTION_START, null, this,
+                        DuplexStreamForegroundService.class);
+                startForegroundService(serviceIntent);
+            }
         }
     }
 }
